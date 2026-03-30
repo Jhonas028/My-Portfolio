@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "logo": "JNS",
+    "name": "Jhonas Sotero",
+    "title": "Jhonas Sotero | Software Developer",
+    "email": "jhonas.sotero@gmail.com",
+    "phone": "+63 916 ###-####",
+    "socials": [
+      { "label": "Facebook", "icon": "fb", "url": "#" },
+      { "label": "Twitter", "icon": "twitter", "url": "#" },
+      { "label": "Instagram", "icon": "instagram-fill", "url": "#" }
+    ]
+  },
+
+  "home": {
+    "badge": "Software Developer",
+    "headline": "Hi, I am Jhonas Sotero a Software Developer",
+    "tagline": "Build reliable and scalable apps that solve real problems, delivering performance, usability, and clean interfaces.",
+    "photo": "/img/my_photo.png",
+    "cta_primary": "Projects",
+    "cta_secondary": "Contact",
+    "skills": [
+      {
+        "icon": "🖥️",
+        "title": "Software Development",
+        "desc": "Experienced in building and maintaining enterprise applications using modern tech stacks. Bringing innovation in system design and best-in-class implementation."
+      },
+      {
+        "icon": "📱",
+        "title": "Mobile Development",
+        "desc": "Developing Android applications using Unity, Flutter and Kotlin. Delivering various platforms of web or app programming on time and ensuring quality."
+      },
+      {
+        "icon": "🗄️",
+        "title": "Database & System Management",
+        "desc": "Adept in designing and managing databases of all sizes, working with MySQL, SQLite, and PostgreSQL. Experienced in system reliability, reporting, and CI/CD pipelines."
+      }
+    ],
+    "cta_banner": "Ready to Bring Your Idea to Life?"
+  },
+
+  "about": {
+    "photo": "/img/about_img.png",
+    "bio": [
+      "A Bachelor of Science in Information Technology <span class='highlight-word'>graduate</span> with a strong foundation in programming, systems development, and problem-solving. Served as the <span class='highlight-word'>main programmer</span> for our Capstone project, demonstrating expertise and dedication in programming field.",
+      "Recognized as a <span class='highlight-word'>National Champion</span> in the Tagisan ng Talino Codefest Competition 2025, showcasing exceptional technical skills and teamwork. Highly motivated to begin a career in the IT industry, with a strong commitment to learning, innovation, and delivering quality solutions."
+    ],
+    "what_i_do_sub": "I work on full-stack applications, back-end systems and databases, and develop scalable enterprise solutions.",
+    "tech_stack": [
+      { "label": "HTML", "class": "html5", "img": "img/html.png" },
+      { "label": "CSS", "class": "css3", "img": "img/css.png" },
+      { "label": "JavaScript", "class": "js", "img": "img/javascript.png" },
+      { "label": "PHP", "class": "php", "img": "img/phppng.png" },
+      { "label": "Tailwind", "class": "tailwind", "img": "img/tw.png" },
+      { "label": "Postgre SQL", "class": "postgres", "img": "img/postgre.png" },
+      { "label": "Firebase", "class": "firebase", "img": "img/firebase.png" },
+      { "label": "Java", "class": "java", "img": "img/java.png" },
+      { "label": "Kotlin", "class": "kotlin", "img": "img/kotlin.png" },
+      { "label": "GitHub", "class": "github", "img": "img/github.png" }
+    ],
+    "experience": [
+      {
+        "img": "img/homecredit.png",
+        "logo_class": "hc",
+        "company": "Home Credit",
+        "role": "Account Agent",
+        "date": "2014 – 2015"
+      },
+      {
+        "img": "img/ssa.png",
+        "logo_class": "ss",
+        "company": "Staff Search Asia",
+        "role": "Sourcing Agent",
+        "date": "2017 – 2019"
+      },
+      {
+        "img": "img/jb.png",
+        "logo_class": "jb",
+        "company": "Jollibee Food Corp.",
+        "role": "Crew Member",
+        "date": "2020 – 2021"
+      }
+    ],
+    "soft_skills": [
+      "Adaptability and Flexibility",
+      "Communication Skills",
+      "People Management",
+      "Time Management",
+      "Organisation",
+      "Working Professionalism"
+    ],
+    "qualifications": [
+      {
+        "img": "img/sti.png",
+        "logo_class": "sti",
+        "school": "STI College San Pablo",
+        "degree": "Bachelor of Science in Information Technology",
+        "date": "2021 – 2025"
+      },
+      {
+        "img": "img/sitero.png",
+        "logo_class": "school",
+        "school": "Sitero Francisco National High School",
+        "degree": "High School",
+        "date": "2013 – 2018"
+      },
+      {
+        "img": "img/cayetano.png",
+        "logo_class": "elem",
+        "school": "Cayetano Arellano Elementary School",
+        "degree": "Elementary School",
+        "date": "2006 – 2013"
+      }
+    ],
+    "certifications": [
+      {
+        "type": "text",
+        "logo_text": "FRONTLINE\nbusiness solutions",
+        "desc": "Certified Business Solutions Technician 2024"
+      },
+      {
+        "type": "icon",
+        "icon": "🏆",
+        "desc": "Region ng Hana — Reformat Champeon 2023"
+      },
+      {
+        "type": "icon",
+        "icon": "🥇",
+        "desc": "Region ng Hana — Claim Renfines"
+      }
+    ]
+  },
+
+  "projects": [
+    {
+      "id": "centra",
+      "title": "Centra Suite",
+      "type": "ERP System",
+      "desc": "A combined ERP system built for mid-sized businesses. Integrated inventory, POS, accounting & HR and reporting into one unified, real-time management platform.",
+      "detail": "The system supports robust multi-module workflows covering finance, inventory tracking, employee management and payroll, point-of-sale transactions, and detailed analytics dashboards.",
+      "img": "img/centrasuite.png",
+      "thumb_type": "screen",
+      "color": "#1e56e8"
+    },
+    {
+      "id": "essay",
+      "title": "Smart Essay",
+      "type": "AI / EdTech",
+      "desc": "An AI-powered essay evaluation system that uses OCR and NLP to automate student essay analysis and provide structured rubric-based feedback.",
+      "detail": "Reduces instructors' manual workload while maintaining high quality assessment. Offers customizable scoring criteria and feedback that helps students understand strengths and areas for improvement.",
+      "img": "img/smartessay.png",
+      "thumb_type": "label",
+      "thumb_label": "SMART ESSAY",
+      "color": "#1e56e8"
+    },
+    {
+      "id": "kuya",
+      "title": "Kuya App",
+      "type": "Mobile / Delivery",
+      "desc": "A real-time mobile delivery app designed to connect vendors, couriers, food providers, and consumers within the community.",
+      "detail": "Built using Flutter and Firebase, providing seamless order tracking with real-time updates, push notifications, and an intuitive driver-partner interface for streamlined last-mile delivery.",
+      "img": "img/tricylcle.png",
+      "thumb_type": "emoji",
+      "thumb_label": "🛺",
+      "color": "#059669"
+    }
+  ],
+
+  "contact": {
+    "heading": "LET'S WORK TOGETHER",
+    "sub": "Have a project in mind? Let's talk.",
+    "email": "jhonas.sotero@gmail.com"
+  }
+}

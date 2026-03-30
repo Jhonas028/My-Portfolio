@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JNS Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR — content injected by JS -->
+    <nav class="navbar">
+      <a
+        class="logo"
+        id="navLogo"
+        href="#"
+        onclick="
+          showPage('home');
+          return false;
+        "
+      ></a>
+      <ul class="nav-links" id="navLinks"></ul>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- PAGES — fully rendered by script.js from portfolio.json -->
+    <div id="page-home" class="page"></div>
+    <div id="page-about" class="page"></div>
+    <div id="page-project" class="page"></div>
+    <div id="page-contact" class="page"></div>
+    <div id="page-dynamic" class="page"></div>
+
+    <!-- FOOTER — rendered by JS -->
+    <footer class="site-footer" id="siteFooter"></footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
