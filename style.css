@@ -66,6 +66,7 @@ body {
   z-index: 999;
   height: 58px;
   width: 100%;
+
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -73,7 +74,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-inline: 1.75rem;
-  padding: 3rem;
+  padding: 3rem 10rem;
 }
 
 .logo {
