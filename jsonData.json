@@ -2,83 +2,90 @@
   "meta": {
     "logo": "JNS",
     "name": "Jhonas Sotero",
-    "title": "Jhonas Sotero | Software Developer",
-    "email": "jhonas.sotero@gmail.com",
-    "phone": "+63 916 ###-####",
+    "title": "Jhonas Sotero | Full Stack Web Developer",
+    "email": "soterojhonas028@gmail.com",
+    "phone": "+63 976-481-1246",
     "socials": [
-      { "label": "Gmail", "icon": "gmail", "url": "mailto:jhonas.sotero@gmail.com" },
-      { "label": "LinkedIn", "icon": "linkedin", "url": "#" },
-      { "label": "GitHub", "icon": "github", "url": "#" }
+      { "label": "Gmail", "icon": "gmail", "url": "mailto:soterojhonas028@gmail.com" },
+      { "label": "LinkedIn", "icon": "linkedin", "url": "https://linkedin.com/in/jhonas-sotero" },
+      { "label": "GitHub", "icon": "github", "url": "https://github.com/Jhonas028" }
     ]
   },
 
   "home": {
-    "badge": "Software Developer",
-    "headline": "Hi, I am Jhonas Sotero a Software Developer",
-    "tagline": "Build reliable and scalable apps that solve real problems, delivering performance, usability, and clean interfaces.",
-    "photo": "/img/my_photo.png",
+    "badge": "Full Stack Web Developer",
+    "headline": "Hi, I am Jhonas Sotero a Full Stack Web Developer",
+    "tagline": "Building scalable web and mobile applications with React, PHP, and JavaScript. Delivering real-world solutions through clean, performant code.",
+    "photo": "img/photos/my_photo.png",
     "cta_primary": "Projects",
     "cta_secondary": "Contact",
     "skills": [
       {
-        "icon": "🖥️",
-        "title": "Software Development",
-        "desc": "Experienced in building and maintaining enterprise applications using modern tech stacks. Bringing innovation in system design and best-in-class implementation."
+        "icon": "🌐",
+        "title": "Full Stack Web Development",
+        "desc": "Building modern web applications using React, Vite, PHP, Tailwind CSS, and REST APIs. Experienced in both frontend UI design and backend API development."
       },
       {
         "icon": "📱",
         "title": "Mobile Development",
-        "desc": "Developing Android applications using Unity, Flutter and Kotlin. Delivering various platforms of web or app programming on time and ensuring quality."
+        "desc": "Developing Android applications using Java and Firebase. Delivering real-time, scalable mobile solutions with push notifications and seamless user experience."
       },
       {
         "icon": "🗄️",
-        "title": "Database & System Management",
-        "desc": "Adept in designing and managing databases of all sizes, working with MySQL, SQLite, and PostgreSQL. Experienced in system reliability, reporting, and CI/CD pipelines."
+        "title": "Database & API Integration",
+        "desc": "Skilled in MySQL and Firebase Realtime Database. Experienced in designing schemas, building REST APIs, and ensuring data integrity across platforms."
       }
     ],
     "cta_banner": "Ready to Bring Your Idea to Life?"
   },
 
   "about": {
-    "photo": "/img/about_img.png",
+    "photo": "img/photos/about_img.png",
     "bio": [
-      "A Bachelor of Science in Information Technology <span class='highlight-word'>graduate</span> with a strong foundation in programming, systems development, and problem-solving. Served as the <span class='highlight-word'>main programmer</span> for our Capstone project, demonstrating expertise and dedication in programming field.",
-      "Recognized as a <span class='highlight-word'>National Champion</span> in the Tagisan ng Talino Codefest Competition 2025, showcasing exceptional technical skills and teamwork. Highly motivated to begin a career in the IT industry, with a strong commitment to learning, innovation, and delivering quality solutions."
+      "An <span class='highlight-word'>IT graduate</span> and Full Stack Web Developer skilled in React, PHP, JavaScript, and Android Development. Served as <span class='highlight-word'>lead developer</span> of SmartEssay, an AI-based capstone mobile application for automated essay scoring and feedback at STI College San Pablo.",
+      "Earned <span class='highlight-word'>National Champion</span> recognition at Tagisan ng Talino: Codefest 2025. Experienced in building scalable web and mobile applications, REST API integration, and delivering solutions to real-world problems."
     ],
-    "what_i_do_sub": "I work on full-stack applications, back-end systems and databases, and develop scalable enterprise solutions.",
+    "what_i_do_sub": "I build full-stack web and mobile applications, design REST APIs, and develop scalable enterprise solutions using modern technologies.",
     "tech_stack": [
-      { "label": "HTML", "class": "html5", "img": "img/html.png" },
-      { "label": "CSS", "class": "css3", "img": "img/css.png" },
-      { "label": "JavaScript", "class": "js", "img": "img/javascript.png" },
-      { "label": "PHP", "class": "php", "img": "img/phppng.png" },
-      { "label": "Tailwind", "class": "tailwind", "img": "img/tw.png" },
-      { "label": "React", "class": "react", "img": "img/react.png" },
-      { "label": "Firebase", "class": "firebase", "img": "img/firebase.png" },
-      { "label": "Java", "class": "java", "img": "img/java.png" },
-      { "label": "Kotlin", "class": "kotlin", "img": "img/kotlin.png" },
-      { "label": "GitHub", "class": "github", "img": "img/github.png" }
+      { "label": "HTML", "class": "html5", "img": "img/tech/html.png" },
+      { "label": "CSS", "class": "css3", "img": "img/tech/css.png" },
+      { "label": "JavaScript", "class": "js", "img": "img/tech/javascript.png" },
+      { "label": "React", "class": "react", "img": "img/tech/react.png" },
+      { "label": "PHP", "class": "php", "img": "img/tech/phppng.png" },
+      { "label": "Tailwind", "class": "tailwind", "img": "img/tech/tw.png" },
+      { "label": "Firebase", "class": "firebase", "img": "img/tech/firebase.png" },
+      { "label": "Java", "class": "java", "img": "img/tech/java.png" },
+      { "label": "GitHub", "class": "github", "img": "img/tech/github.png" }
     ],
     "experience": [
       {
-        "img": "img/homecredit.png",
-        "logo_class": "hc",
-        "company": "Home Credit",
-        "role": "Account Agent",
-        "date": "2014 – 2015"
+        "img": "",
+        "logo": "💼",
+        "logo_class": "fl",
+        "company": "Frontline Business Solutions",
+        "role": "Full Stack Development Intern",
+        "date": "2025 (480 Hours)"
       },
       {
-        "img": "img/ssa.png",
+        "img": "img/logos/homecredit.png",
+        "logo_class": "hc",
+        "company": "Home Credit Philippines",
+        "role": "Telesales Agent",
+        "date": "2019 – 2022"
+      },
+      {
+        "img": "img/logos/ssa.png",
         "logo_class": "ss",
-        "company": "Staff Search Asia",
-        "role": "Sourcing Agent",
+        "company": "Staff Search Service Asia",
+        "role": "On-site Supervisor",
         "date": "2017 – 2019"
       },
       {
-        "img": "img/jb.png",
+        "img": "img/logos/jb.png",
         "logo_class": "jb",
-        "company": "Jollibee Food Corp.",
-        "role": "Crew Member",
-        "date": "2020 – 2021"
+        "company": "Jollibee Valenzuela",
+        "role": "Service Crew",
+        "date": "2014 – 2017"
       }
     ],
     "soft_skills": [
@@ -91,42 +98,52 @@
     ],
     "qualifications": [
       {
-        "img": "img/sti.png",
+        "img": "img/logos/sti.png",
         "logo_class": "sti",
         "school": "STI College San Pablo",
         "degree": "Bachelor of Science in Information Technology",
-        "date": "2021 – 2025"
+        "date": "2024 – 2026 (Expected)"
       },
       {
-        "img": "img/sitero.png",
+        "img": "img/logos/sti.png",
+        "logo_class": "sti",
+        "school": "STI College Marikina",
+        "degree": "Bachelor of Science in Information Technology",
+        "date": "2022 – 2024"
+      },
+      {
+        "img": "img/logos/sitero.png",
         "logo_class": "school",
         "school": "Sitero Francisco National High School",
         "degree": "High School",
         "date": "2013 – 2018"
-      },
-      {
-        "img": "img/cayetano.png",
-        "logo_class": "elem",
-        "school": "Cayetano Arellano Elementary School",
-        "degree": "Elementary School",
-        "date": "2006 – 2013"
       }
     ],
     "certifications": [
       {
-        "type": "text",
-        "logo_text": "FRONTLINE\nbusiness solutions",
-        "desc": "Certified Business Solutions Technician 2024"
-      },
-      {
         "type": "icon",
         "icon": "🏆",
-        "desc": "Region ng Hana — Reformat Champeon 2023"
+        "desc": "Tagisan ng Talino: Codefest — National Champion 2025"
       },
       {
         "type": "icon",
-        "icon": "🥇",
-        "desc": "Region ng Hana — Claim Renfines"
+        "icon": "🥈",
+        "desc": "Tagisan ng Talino: Codefest — Cluster Contender 2024"
+      },
+      {
+        "type": "icon",
+        "icon": "🎓",
+        "desc": "Full Stack Web Development Certificate — Udemy, 2025"
+      },
+      {
+        "type": "icon",
+        "icon": "☕",
+        "desc": "Java Fundamentals Certificate — Oracle Academy, 2023"
+      },
+      {
+        "type": "icon",
+        "icon": "🖥️",
+        "desc": "System Administration Certificate — 2024"
       }
     ]
   },
@@ -135,22 +152,33 @@
     {
       "id": "centra",
       "title": "Centra Suite",
-      "type": "ERP System",
-      "desc": "A combined ERP system built for mid-sized businesses. Integrated inventory, POS, accounting & HR and reporting into one unified, real-time management platform.",
-      "detail": "The system supports robust multi-module workflows covering finance, inventory tracking, employee management and payroll, point-of-sale transactions, and detailed analytics dashboards.",
-      "imgs": ["img/centrasuite.png", "img/smartessay.png", "img/tricylcle.png"],
+      "type": "SaaS / Web Platform",
+      "desc": "A full-stack multi-tenant SaaS platform with inventory management, POS, and branch account control using role-based access (Owner / Branch Manager).",
+      "detail": "Built with React 19, Vite, Tailwind CSS v4, TanStack React Query v5, PHP, MySQL, and JWT. Includes RESTful API, OTP email verification, real-time POS with cart, discounts, payments, and automatic inventory updates.",
+      "imgs": ["img/projects/centrasuite.png"],
       "thumb_type": "screen",
       "color": "#1e56e8"
     },
     {
       "id": "essay",
       "title": "Smart Essay",
-      "type": "AI / EdTech",
-      "desc": "An AI-powered essay evaluation system that uses OCR and NLP to automate student essay analysis and provide structured rubric-based feedback.",
-      "detail": "Reduces instructors' manual workload while maintaining high quality assessment. Offers customizable scoring criteria and feedback that helps students understand strengths and areas for improvement.",
-      "imgs": ["img/smartessay.png"],
+      "type": "AI / Mobile App",
+      "desc": "An AI-based Android system using OCR and NLP to evaluate student essays and provide structured rubric-based feedback for STI College San Pablo.",
+      "detail": "Built using Android (Java) and Firebase for real-time data storage and user authentication. Capstone project that earned National Champion at Tagisan ng Talino: Codefest 2025.",
+      "imgs": ["img/projects/smartessay.png"],
       "thumb_type": "label",
       "thumb_label": "SMART ESSAY",
+      "color": "#1e56e8"
+    },
+    {
+      "id": "hris",
+      "title": "HRIS System",
+      "type": "Web Application",
+      "desc": "A full-stack HR management platform for employee data management, payroll processing, and core HR operations.",
+      "detail": "Built with React, Vite, JavaScript, and MySQL. Features a responsive UI with integrated REST APIs for backend communication and real-time data management.",
+      "imgs": [],
+      "thumb_type": "label",
+      "thumb_label": "HRIS",
       "color": "#1e56e8"
     },
     {
@@ -158,8 +186,8 @@
       "title": "Kuya App",
       "type": "Mobile / Delivery",
       "desc": "A real-time mobile delivery app designed to connect vendors, couriers, food providers, and consumers within the community.",
-      "detail": "Built using Flutter and Firebase, providing seamless order tracking with real-time updates, push notifications, and an intuitive driver-partner interface for streamlined last-mile delivery.",
-      "imgs": ["img/tricylcle.png"],
+      "detail": "Built using Android (Java) and Firebase, providing seamless order tracking with real-time updates, push notifications, and an intuitive driver-partner interface for streamlined last-mile delivery.",
+      "imgs": ["img/projects/tricylcle.png"],
       "thumb_type": "emoji",
       "thumb_label": "🛺",
       "color": "#059669"
@@ -169,6 +197,6 @@
   "contact": {
     "heading": "LET'S WORK TOGETHER",
     "sub": "Have a project in mind? Let's talk.",
-    "email": "jhonas.sotero@gmail.com"
+    "email": "soterojhonas028@gmail.com"
   }
 }
