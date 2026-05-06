@@ -176,19 +176,25 @@ function thumbHTML(p, size) {
   if (imgs.length > 0) {
     if (size === "lg") {
       const slides = imgs.map(function (src, i) {
-        return `<img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:${i === 0 ? "block" : "none"};" />`;
+        return `
+          <div class="carousel-slide" style="display:${i === 0 ? "block" : "none"};width:100%;height:100%;cursor:zoom-in;position:relative;" onclick="openLightbox('${p.id}',${i})">
+            <img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+            <div class="img-expand-hint" style="position:absolute;inset:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center;transition:background .2s;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0;transition:opacity .2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+          </div>`;
       }).join("");
       const counter = imgs.length > 1
-        ? `<div class="carousel-counter" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;">1 / ${imgs.length}</div>`
+        ? `<div class="carousel-counter" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;z-index:3;pointer-events:none;">1 / ${imgs.length}</div>`
         : "";
-      const dots = imgs.length > 1 ? `<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;">
+      const dots = imgs.length > 1 ? `<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;">
         ${imgs.map(function (_, i) {
-          return `<span class="carousel-dot" style="width:7px;height:7px;border-radius:50%;background:${i === 0 ? "#fff" : "rgba(255,255,255,0.4)"};display:inline-block;cursor:pointer;transition:background .2s;" onclick="goSlide('${p.id}',${i})"></span>`;
+          return `<span class="carousel-dot" style="width:7px;height:7px;border-radius:50%;background:${i === 0 ? "#fff" : "rgba(255,255,255,0.4)"};display:inline-block;cursor:pointer;transition:background .2s;" onclick="event.stopPropagation();goSlide('${p.id}',${i})"></span>`;
         }).join("")}
       </div>` : "";
       const arrows = imgs.length > 1 ? `
-        <button onclick="prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
-        <button onclick="nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>` : "";
+        <button onclick="event.stopPropagation();prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
+        <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>` : "";
       return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);">
         ${slides}${counter}${arrows}${dots}
       </div>`;
@@ -235,26 +241,104 @@ function thumbHTML(p, size) {
 function goSlide(id, index) {
   const c = document.getElementById("carousel-" + id);
   if (!c) return;
-  const imgs = c.querySelectorAll("img");
-  imgs.forEach(function (img, i) { img.style.display = i === index ? "block" : "none"; });
+  const slides = c.querySelectorAll(".carousel-slide");
+  slides.forEach(function (s, i) { s.style.display = i === index ? "block" : "none"; });
   c.dataset.current = index;
   c.querySelectorAll(".carousel-dot").forEach(function (dot, i) {
     dot.style.background = i === index ? "#fff" : "rgba(255,255,255,0.4)";
   });
   const counter = c.querySelector(".carousel-counter");
-  if (counter) counter.textContent = (index + 1) + " / " + imgs.length;
+  if (counter) counter.textContent = (index + 1) + " / " + slides.length;
 }
 function prevSlide(id) {
   const c = document.getElementById("carousel-" + id);
   if (!c) return;
-  const total = c.querySelectorAll("img").length;
+  const total = c.querySelectorAll(".carousel-slide").length;
   goSlide(id, (parseInt(c.dataset.current) - 1 + total) % total);
 }
 function nextSlide(id) {
   const c = document.getElementById("carousel-" + id);
   if (!c) return;
-  const total = c.querySelectorAll("img").length;
+  const total = c.querySelectorAll(".carousel-slide").length;
   goSlide(id, (parseInt(c.dataset.current) + 1) % total);
+}
+
+// ── Lightbox
+function openLightbox(projectId, startIndex) {
+  const p = data.projects.find(function (proj) { return proj.id === projectId; });
+  if (!p) return;
+  const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : [];
+  if (imgs.length === 0) return;
+
+  const existing = document.getElementById("lightbox");
+  if (existing) existing.remove();
+
+  const thumbsHTML = imgs.length > 1
+    ? `<div style="display:flex;gap:8px;margin-top:16px;">
+        ${imgs.map(function (src, i) {
+          return `<img src="${src}" class="lb-thumb" data-index="${i}" onclick="lbGoTo(${i})"
+            style="width:60px;height:44px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid ${i === startIndex ? "#fff" : "transparent"};opacity:${i === startIndex ? "1" : "0.5"};transition:all .2s;" />`;
+        }).join("")}
+      </div>` : "";
+
+  const lb = document.createElement("div");
+  lb.id = "lightbox";
+  lb.dataset.projectId = projectId;
+  lb.dataset.current = startIndex;
+  lb.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:lbFade .2s ease;";
+  lb.innerHTML = `
+    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:42px;height:42px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">✕</button>
+    <div id="lb-counter" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:0.78rem;font-family:Poppins,sans-serif;letter-spacing:.05em;">${startIndex + 1} / ${imgs.length}</div>
+    ${imgs.length > 1 ? `<button onclick="lbPrev()" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">‹</button>` : ""}
+    ${imgs.length > 1 ? `<button onclick="lbNext()" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">›</button>` : ""}
+    <img id="lb-img" src="${imgs[startIndex]}" style="max-width:88vw;max-height:72vh;object-fit:contain;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,0.6);" />
+    ${thumbsHTML}
+  `;
+
+  document.body.appendChild(lb);
+  lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+  document.addEventListener("keydown", lbKeyHandler);
+}
+
+function closeLightbox() {
+  const lb = document.getElementById("lightbox");
+  if (lb) lb.remove();
+  document.removeEventListener("keydown", lbKeyHandler);
+}
+
+function lbKeyHandler(e) {
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") lbPrev();
+  if (e.key === "ArrowRight") lbNext();
+}
+
+function lbGoTo(index) {
+  const lb = document.getElementById("lightbox");
+  if (!lb) return;
+  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const imgs = p && p.imgs ? p.imgs : [];
+  lb.dataset.current = index;
+  document.getElementById("lb-img").src = imgs[index];
+  const counter = document.getElementById("lb-counter");
+  if (counter) counter.textContent = (index + 1) + " / " + imgs.length;
+  lb.querySelectorAll(".lb-thumb").forEach(function (t, i) {
+    t.style.border = i === index ? "2px solid #fff" : "2px solid transparent";
+    t.style.opacity = i === index ? "1" : "0.5";
+  });
+}
+function lbPrev() {
+  const lb = document.getElementById("lightbox");
+  if (!lb) return;
+  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const total = p && p.imgs ? p.imgs.length : 0;
+  lbGoTo((parseInt(lb.dataset.current) - 1 + total) % total);
+}
+function lbNext() {
+  const lb = document.getElementById("lightbox");
+  if (!lb) return;
+  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const total = p && p.imgs ? p.imgs.length : 0;
+  lbGoTo((parseInt(lb.dataset.current) + 1) % total);
 }
 
 // ═══════════════════════════════════════════
@@ -495,6 +579,36 @@ function renderProjectPage() {
     })
     .join("");
 
+  const otherHTML = (data.other_projects || []).map(function (group) {
+    const cards = group.items.map(function (item) {
+      const preview = item.img
+        ? `<div class="other-proj-preview" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:200px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.15);border:1px solid #e5e7eb;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;">
+              <img src="${item.img}" style="width:100%;height:120px;object-fit:cover;" />
+              <div style="padding:8px 10px;">
+                <p style="font-size:0.75rem;font-weight:600;color:#111827;">${item.name}</p>
+                <p style="font-size:0.68rem;color:#9ca3af;">${item.tech}</p>
+              </div>
+            </div>`
+        : "";
+      return `
+        <div class="other-proj-card" style="position:relative;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:default;transition:border-color .2s,box-shadow .2s;"
+          onmouseenter="this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
+          onmouseleave="this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
+          ${preview}
+          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-base flex-shrink-0">${group.icon}</div>
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-gray-800 truncate">${item.name}</p>
+            <p class="text-xs text-gray-400">${item.tech}</p>
+          </div>
+        </div>`;
+    }).join("");
+    return `
+      <div class="mb-6">
+        <h4 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">${group.category}</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
+      </div>`;
+  }).join("");
+
   el.innerHTML = `
     <div class="max-w-[900px] w-full mx-auto px-6 py-12">
       <div class="mb-2">
@@ -505,6 +619,16 @@ function renderProjectPage() {
         ${tabsHTML}
       </div>
       ${detailsHTML}
+
+      <!-- Other Projects -->
+      <div class="mt-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex-1 h-px bg-gray-100"></div>
+          <p class="text-xs font-bold text-gray-400 tracking-widest uppercase">Other Projects</p>
+          <div class="flex-1 h-px bg-gray-100"></div>
+        </div>
+        ${otherHTML}
+      </div>
     </div>
     <section class="cta-banner">
       <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;width:100%;">

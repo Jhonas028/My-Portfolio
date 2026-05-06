@@ -194,6 +194,31 @@
     }
   ],
 
+  "other_projects": [
+    {
+      "category": "Web Apps / React",
+      "icon": "🌐",
+      "items": [
+        { "name": "FinExpert", "tech": "React, Vite", "img": "img/projects/centrasuite.png" },
+        { "name": "Business Blog", "tech": "React", "img": "img/projects/centrasuite.png" },
+        { "name": "DeepBlue", "tech": "React, Vite", "img": "img/projects/centrasuite.png" },
+        { "name": "Bike App", "tech": "React", "img": "img/projects/centrasuite.png" },
+        { "name": "Fitness Website", "tech": "React, Tailwind", "img": "img/projects/centrasuite.png" },
+        { "name": "Get Pizza", "tech": "React", "img": "img/projects/centrasuite.png" },
+        { "name": "Recipe Site", "tech": "React", "img": "img/projects/centrasuite.png" }
+      ]
+    },
+    {
+      "category": "WordPress",
+      "icon": "🔵",
+      "items": [
+        { "name": "CVD Awareness", "tech": "WordPress", "img": "img/projects/centrasuite.png" },
+        { "name": "Cosmos", "tech": "WordPress", "img": "img/projects/centrasuite.png" },
+        { "name": "Beyond Borders", "tech": "WordPress", "img": "img/projects/centrasuite.png" }
+      ]
+    }
+  ],
+
   "contact": {
     "heading": "LET'S WORK TOGETHER",
     "sub": "Have a project in mind? Let's talk.",
