@@ -40,13 +40,12 @@ function renderNav() {
   navLogo.innerHTML = `<img src="img/jns-logo.png" alt="${data.meta.logo}" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" />`;
   document.title = data.meta.title;
 
-  const pages = ["home", "about", "project", "contact", "dynamic"];
+  const pages = ["home", "about", "project", "contact"];
   const labels = {
     home: "Home",
     about: "About",
     project: "Project",
     contact: "Contact",
-    dynamic: "Dynamic",
   };
   const ul = document.getElementById("navLinks");
   ul.innerHTML = "";
@@ -173,8 +172,28 @@ function renderHomeProjects() {
 // ── Thumbnail builder
 function thumbHTML(p, size) {
   const cls = size === "lg" ? "proj-visual" : "proj-thumb";
-  if (p.img) {
-    return `<div class="${cls}"><img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" /></div>`;
+  const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : (p.img ? [p.img] : []);
+  if (imgs.length > 0) {
+    if (size === "lg") {
+      const slides = imgs.map(function (src, i) {
+        return `<img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:${i === 0 ? "block" : "none"};" />`;
+      }).join("");
+      const counter = imgs.length > 1
+        ? `<div class="carousel-counter" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;">1 / ${imgs.length}</div>`
+        : "";
+      const dots = imgs.length > 1 ? `<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;">
+        ${imgs.map(function (_, i) {
+          return `<span class="carousel-dot" style="width:7px;height:7px;border-radius:50%;background:${i === 0 ? "#fff" : "rgba(255,255,255,0.4)"};display:inline-block;cursor:pointer;transition:background .2s;" onclick="goSlide('${p.id}',${i})"></span>`;
+        }).join("")}
+      </div>` : "";
+      const arrows = imgs.length > 1 ? `
+        <button onclick="prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
+        <button onclick="nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>` : "";
+      return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);">
+        ${slides}${counter}${arrows}${dots}
+      </div>`;
+    }
+    return `<div class="${cls}"><img src="${imgs[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" /></div>`;
   }
   if (p.thumb_type === "screen") {
     if (size === "lg") {
@@ -212,6 +231,32 @@ function thumbHTML(p, size) {
   return `<div class="${cls}"></div>`;
 }
 
+// ── Carousel controls
+function goSlide(id, index) {
+  const c = document.getElementById("carousel-" + id);
+  if (!c) return;
+  const imgs = c.querySelectorAll("img");
+  imgs.forEach(function (img, i) { img.style.display = i === index ? "block" : "none"; });
+  c.dataset.current = index;
+  c.querySelectorAll(".carousel-dot").forEach(function (dot, i) {
+    dot.style.background = i === index ? "#fff" : "rgba(255,255,255,0.4)";
+  });
+  const counter = c.querySelector(".carousel-counter");
+  if (counter) counter.textContent = (index + 1) + " / " + imgs.length;
+}
+function prevSlide(id) {
+  const c = document.getElementById("carousel-" + id);
+  if (!c) return;
+  const total = c.querySelectorAll("img").length;
+  goSlide(id, (parseInt(c.dataset.current) - 1 + total) % total);
+}
+function nextSlide(id) {
+  const c = document.getElementById("carousel-" + id);
+  if (!c) return;
+  const total = c.querySelectorAll("img").length;
+  goSlide(id, (parseInt(c.dataset.current) + 1) % total);
+}
+
 // ═══════════════════════════════════════════
 // PAGE: ABOUT
 // ═══════════════════════════════════════════
@@ -243,7 +288,7 @@ function renderAboutPage() {
       </div>
     </section>
 
-    <div class="scroll-caret">˅</div>
+    <div class="scroll-caret" onclick="document.querySelector('#page-about .skills-section').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">˅</div>
 
     <!-- What I Do -->
     <section class="section skills-section">
@@ -291,14 +336,20 @@ function renderAboutPage() {
     </section>
   `;
 
-  // socials — image icons
+  // socials — SVG icons
+  const socialSVGs = {
+    gmail: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.09l8.073-5.6C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/></svg>`,
+    linkedin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2"/></svg>`,
+    github: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#181717"/></svg>`,
+  };
   const socDiv = document.getElementById("aboutSocials");
   data.meta.socials.forEach(function (s) {
     const a2 = document.createElement("a");
     a2.href = s.url;
     a2.className = "social-icon-link";
-    a2.target = "_blank";
-    a2.innerHTML = `<img src="img/ic-${s.icon}.png" alt="${s.label}" />`;
+    a2.target = s.icon === "gmail" ? "_self" : "_blank";
+    a2.title = s.label;
+    a2.innerHTML = socialSVGs[s.icon] || `<span>${s.label}</span>`;
     socDiv.appendChild(a2);
   });
 
@@ -399,28 +450,45 @@ function renderProjectPage() {
 
   const tabsHTML = data.projects
     .map(function (p, i) {
-      return `<button class="proj-tab${i === 0 ? " active" : ""}"
-      data-id="${p.id}" onclick="switchProject('${p.id}')">${p.title}</button>`;
+      const active = i === 0
+        ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+        : "bg-white border-gray-200 text-gray-500 hover:border-blue-400 hover:text-blue-600";
+      return `<button class="proj-tab px-5 py-2 rounded-full text-sm font-semibold border-2 cursor-pointer transition-all duration-200 ${active}"
+        data-id="${p.id}" onclick="switchProject('${p.id}')">${p.title}</button>`;
     })
     .join("");
 
   const detailsHTML = data.projects
     .map(function (p, i) {
       return `
-      <div class="proj-detail${i === 0 ? " active" : ""}" id="detail-${p.id}">
-        <div class="proj-detail-top">
-          <div class="proj-detail-info">
-            <h1 class="proj-detail-title">${p.title.toUpperCase()}</h1>
-            <span class="proj-type-tag">${p.type}</span>
-            <p>${p.desc}</p>
-            <p>${p.detail}</p>
-            <p style="margin-top:.5rem;color:var(--blue);font-size:.85rem;">✉ ${data.meta.email}</p>
-            <div style="display:flex;gap:0.5rem;margin-top:1rem;">
-              <button class="modal-btn-save" onclick="editProject(${i})" style="font-size:0.78rem;padding:0.45rem 1rem;">✏️ Edit</button>
-              <button class="modal-btn-cancel" onclick="deleteProject(${i})" style="font-size:0.78rem;padding:0.45rem 1rem;color:#dc2626;border-color:#fecaca;">🗑️ Delete</button>
+      <div class="proj-detail ${i === 0 ? "flex" : "hidden"} flex-col" id="detail-${p.id}">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden">
+          <div class="flex flex-col lg:flex-row">
+
+            <!-- Left: Info -->
+            <div class="flex-1 p-8 flex flex-col justify-between min-w-0">
+              <div>
+                <div class="flex items-center gap-3 mb-5">
+                  <span class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full tracking-wider uppercase">${p.type}</span>
+                  <span class="text-xs font-bold text-gray-300">#${String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <h1 class="text-[clamp(1.4rem,3vw,2rem)] font-extrabold text-gray-900 tracking-tight leading-tight mb-3">${p.title}</h1>
+                <div class="w-10 h-1 bg-blue-600 rounded-full mb-5"></div>
+                <p class="text-sm text-gray-500 leading-relaxed mb-3">${p.desc}</p>
+                <p class="text-sm text-gray-400 leading-relaxed">${p.detail}</p>
+              </div>
+              <div class="mt-8 pt-5 border-t border-gray-100 flex items-center gap-2">
+                <span class="text-blue-400 text-sm">✉</span>
+                <span class="text-xs text-gray-400">${data.meta.email}</span>
+              </div>
             </div>
+
+            <!-- Right: Image / Carousel -->
+            <div class="flex-shrink-0 lg:w-[420px] bg-gradient-to-br from-slate-50 to-blue-50 border-t lg:border-t-0 lg:border-l border-gray-100 flex items-center justify-center p-6">
+              ${thumbHTML(p, "lg")}
+            </div>
+
           </div>
-          ${thumbHTML(p, "lg")}
         </div>
       </div>
     `;
@@ -428,10 +496,13 @@ function renderProjectPage() {
     .join("");
 
   el.innerHTML = `
-    <div class="proj-detail-wrap">
-      <div class="proj-tabs">
+    <div class="max-w-[900px] w-full mx-auto px-6 py-12">
+      <div class="mb-2">
+        <p class="text-xs font-bold text-blue-500 tracking-widest uppercase mb-1">Portfolio</p>
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-7">My Projects</h2>
+      </div>
+      <div class="flex gap-2.5 flex-wrap mb-8">
         ${tabsHTML}
-        <button class="proj-tab-add" onclick="openProjectModal()" title="Add Project">＋</button>
       </div>
       ${detailsHTML}
     </div>
@@ -441,7 +512,6 @@ function renderProjectPage() {
           <h2>${data.home.cta_banner}</h2>
           <button class="btn btn-blue" onclick="showPage('contact')">Hire Me</button>
         </div>
-  
       </div>
     </section>
   `;
@@ -573,14 +643,23 @@ function saveProject(index) {
 
 function switchProject(id) {
   document.querySelectorAll(".proj-detail").forEach(function (d) {
-    d.classList.remove("active");
+    d.classList.remove("flex");
+    d.classList.add("hidden");
   });
   document.querySelectorAll(".proj-tab").forEach(function (t) {
-    t.classList.remove("active");
-    if (t.dataset.id === id) t.classList.add("active");
+    t.classList.remove("bg-blue-600", "border-blue-600", "text-white", "shadow-sm");
+    t.classList.add("bg-white", "border-gray-200", "text-gray-500");
   });
   const panel = document.getElementById("detail-" + id);
-  if (panel) panel.classList.add("active");
+  if (panel) {
+    panel.classList.remove("hidden");
+    panel.classList.add("flex");
+  }
+  const tab = document.querySelector(`.proj-tab[data-id="${id}"]`);
+  if (tab) {
+    tab.classList.remove("bg-white", "border-gray-200", "text-gray-500");
+    tab.classList.add("bg-blue-600", "border-blue-600", "text-white", "shadow-sm");
+  }
 }
 
 function showProjectDetail(id) {

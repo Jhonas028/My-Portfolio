@@ -64,7 +64,6 @@ body {
 .navbar {
   inset: 0 0 auto;
   z-index: 999;
-  height: 58px;
   width: 100%;
 
   background: rgba(255, 255, 255, 0.95);
@@ -73,13 +72,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 1.75rem;
-  padding: 3rem 10rem;
+  padding-block: 0.75rem;
+  padding-inline: max(1.5rem, calc((100% - var(--wrap)) / 2 + 1.5rem));
 }
 
 .logo {
-  width: 90px;
-  height: 90px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
   background: transparent; /* remove blue bg */
   border: none; /* remove border */
@@ -101,7 +100,7 @@ body {
   display: flex;
   list-style: none;
   gap: 0.1rem;
-  margin-top: 2rem;
+  margin-top: 0;
 }
 .nav-link {
   font-size: 0.82rem;
@@ -873,112 +872,6 @@ body {
 /* ═══════════════════════════════════════════
    PROJECT PAGE
 ════════════════════════════════════════════ */
-.proj-detail-wrap {
-  padding: 3rem 1.5rem;
-  max-width: var(--wrap);
-  width: 100%;
-  margin-inline: auto;
-}
-
-.proj-tabs {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-bottom: 2.5rem;
-}
-.proj-tab {
-  padding: 0.45rem 1.25rem;
-  border-radius: 7px;
-  font-family: "Poppins", sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 2px solid var(--blue);
-  background: transparent;
-  color: var(--blue);
-  cursor: pointer;
-  transition:
-    background var(--t),
-    color var(--t);
-}
-.proj-tab.active,
-.proj-tab:hover {
-  background: var(--blue);
-  color: #fff;
-}
-
-.proj-tab-add {
-  width: 36px;
-  height: 36px;
-  border-radius: 7px;
-  font-size: 1.2rem;
-  font-weight: 400;
-  border: 2px dashed var(--blue-mid);
-  background: var(--blue-light);
-  color: var(--blue);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background var(--t),
-    border-color var(--t),
-    transform var(--t);
-  flex-shrink: 0;
-}
-.proj-tab-add:hover {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.proj-detail {
-  display: none;
-  flex-direction: column;
-  gap: 1.5rem;
-  animation: pgIn 0.3s ease both;
-}
-.proj-detail.active {
-  display: flex;
-}
-
-.proj-detail-top {
-  display: flex;
-  gap: 2.5rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.proj-detail-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.proj-detail-title {
-  font-size: clamp(1.4rem, 4vw, 2.4rem);
-  font-weight: 800;
-  color: var(--dark);
-  letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
-}
-.proj-type-tag {
-  display: inline-block;
-  margin-bottom: 1rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  background: var(--blue-light);
-  color: var(--blue);
-  border: 1px solid var(--blue-mid);
-  padding: 0.2rem 0.7rem;
-  border-radius: 5px;
-}
-.proj-detail-info p {
-  font-size: 0.875rem;
-  color: var(--gray);
-  line-height: 1.8;
-  margin-bottom: 0.65rem;
-}
-
 .proj-visual {
   flex-shrink: 0;
   width: 350px;
@@ -1647,9 +1540,6 @@ textarea.form-input {
   }
 
   /* PROJECT */
-  .proj-detail-top {
-    flex-direction: column;
-  }
   .proj-visual {
     width: 100%;
     height: auto;
