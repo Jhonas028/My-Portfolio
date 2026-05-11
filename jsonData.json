@@ -55,6 +55,7 @@
       { "label": "Tailwind", "class": "tailwind", "img": "img/tech/tw.png" },
       { "label": "Firebase", "class": "firebase", "img": "img/tech/firebase.png" },
       { "label": "Java", "class": "java", "img": "img/tech/java.png" },
+      { "label": "MySQL", "class": "mysql", "img": "img/tech/mysql.png" },
       { "label": "GitHub", "class": "github", "img": "img/tech/github.png" }
     ],
     "experience": [
@@ -199,22 +200,21 @@
       "category": "Web Apps / React",
       "icon": "🌐",
       "items": [
-        { "name": "FinExpert", "tech": "React, Vite", "img": "img/projects/centrasuite.png" },
-        { "name": "Business Blog", "tech": "React", "img": "img/projects/centrasuite.png" },
-        { "name": "DeepBlue", "tech": "React, Vite", "img": "img/projects/centrasuite.png" },
-        { "name": "Bike App", "tech": "React", "img": "img/projects/centrasuite.png" },
-        { "name": "Fitness Website", "tech": "React, Tailwind", "img": "img/projects/centrasuite.png" },
-        { "name": "Get Pizza", "tech": "React", "img": "img/projects/centrasuite.png" },
-        { "name": "Recipe Site", "tech": "React", "img": "img/projects/centrasuite.png" }
+        { "name": "FinExpert", "tech": "React, Vite", "imgs": ["img/project%20images/FinExpert/fin1.png", "img/project%20images/FinExpert/fin2.png", "img/project%20images/FinExpert/fin3.png", "img/project%20images/FinExpert/fin4.png"] },
+        { "name": "Business Blog", "tech": "React", "imgs": ["img/project%20images/Business%20Blog/business1.png", "img/project%20images/Business%20Blog/business2.png", "img/project%20images/Business%20Blog/business3.png", "img/project%20images/Business%20Blog/business4.png"] },
+        { "name": "DeepBlue", "tech": "React, Vite", "imgs": ["img/project%20images/DeepBlue/deep1.png", "img/project%20images/DeepBlue/deep2.png", "img/project%20images/DeepBlue/deep3.png", "img/project%20images/DeepBlue/deep4.png", "img/project%20images/DeepBlue/deep5.png", "img/project%20images/DeepBlue/deep6.png"] },
+        { "name": "Fitness Website", "tech": "React, Tailwind", "imgs": ["img/project%20images/Fitness/fit1.png", "img/project%20images/Fitness/fit2.png", "img/project%20images/Fitness/fit4.png"] },
+        { "name": "Get Pizza", "tech": "React", "imgs": ["img/project%20images/Get%20Pizza/pizza1.png", "img/project%20images/Get%20Pizza/pizza2.png", "img/project%20images/Get%20Pizza/pizza3.png"] },
+        { "name": "Recipe Site", "tech": "React", "imgs": ["img/project%20images/Recipe/recipe1.png", "img/project%20images/Recipe/recipe2.png", "img/project%20images/Recipe/recipe3.png", "img/project%20images/Recipe/recipe4.png", "img/project%20images/Recipe/recipe5.png", "img/project%20images/Recipe/recipe6.png"] }
       ]
     },
     {
       "category": "WordPress",
       "icon": "🔵",
       "items": [
-        { "name": "CVD Awareness", "tech": "WordPress", "img": "img/projects/centrasuite.png" },
-        { "name": "Cosmos", "tech": "WordPress", "img": "img/projects/centrasuite.png" },
-        { "name": "Beyond Borders", "tech": "WordPress", "img": "img/projects/centrasuite.png" }
+        { "name": "CVD Awareness", "tech": "WordPress", "imgs": ["img/project%20images/CVD/cvd1.png", "img/project%20images/CVD/cvd2.png", "img/project%20images/CVD/cvd3.png"] },
+        { "name": "Cosmos", "tech": "WordPress", "imgs": ["img/project%20images/cosmos/cosmos1.png", "img/project%20images/cosmos/cosmos2.png", "img/project%20images/cosmos/cosmos3.png", "img/project%20images/cosmos/cosmos4.png"] },
+        { "name": "Beyond Borders", "tech": "WordPress", "imgs": ["img/project%20images/BeyondBorder/beyond1.png", "img/project%20images/BeyondBorder/beyond2.png", "img/project%20images/BeyondBorder/beyond3.png", "img/project%20images/BeyondBorder/beyond4.png"] }
       ]
     }
   ],

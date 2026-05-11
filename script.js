@@ -61,6 +61,23 @@ function renderNav() {
 // ═══════════════════════════════════════════
 // PAGE: HOME
 // ═══════════════════════════════════════════
+function ctaBannerHTML() {
+  return `
+    <section class="cta-banner">
+      <div class="cta-blob cta-b1"></div>
+      <div class="cta-blob cta-b2"></div>
+      <div class="cta-inner">
+        <div class="cta-badge">✦ Available for Work</div>
+        <h2 class="cta-heading">${data.home.cta_banner}</h2>
+        <p class="cta-sub">Let's collaborate and build something amazing together.</p>
+        <div class="cta-actions">
+          <button class="cta-btn-primary" onclick="showPage('contact')">Hire Me &rarr;</button>
+          <button class="cta-btn-ghost" onclick="showPage('project')">View Projects</button>
+        </div>
+      </div>
+    </section>`;
+}
+
 function renderHomePage() {
   const h = data.home;
   const el = document.getElementById("page-home");
@@ -73,8 +90,8 @@ function renderHomePage() {
         <h1 class="hero-title">${heroTitle(h.headline)}</h1>
         <p class="hero-sub">${h.tagline}</p>
         <div class="hero-cta">
-          <button class="btn btn-blue" onclick="showPage('project')">${h.cta_primary}</button>
-          <button class="btn btn-outline" onclick="showPage('contact')">${h.cta_secondary}</button>
+          <button class="btn btn-outline" onclick="showPage('project')">${h.cta_primary}</button>
+          <button class="btn btn-blue" onclick="showPage('contact')">${h.cta_secondary}</button>
         </div>
       </div>
       <div class="hero-photo">
@@ -107,18 +124,7 @@ function renderHomePage() {
     </section>
   `;
 
-  // ── CTA Banner
-  const ctaHTML = `
-    <section class="cta-banner">
-      <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;width:100%;">
-        <div>
-          <h2>${h.cta_banner}</h2>
-          <button class="btn btn-blue" onclick="showPage('contact')">Hire Me</button>
-        </div>
-    
-      </div>
-    </section>
-  `;
+  const ctaHTML = ctaBannerHTML();
 
   el.innerHTML = heroHTML + skillsHTML + projHTML + ctaHTML;
 
@@ -172,29 +178,40 @@ function renderHomeProjects() {
 // ── Thumbnail builder
 function thumbHTML(p, size) {
   const cls = size === "lg" ? "proj-visual" : "proj-thumb";
-  const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : (p.img ? [p.img] : []);
+  const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : p.img ? [p.img] : [];
   if (imgs.length > 0) {
     if (size === "lg") {
-      const slides = imgs.map(function (src, i) {
-        return `
+      const slides = imgs
+        .map(function (src, i) {
+          return `
           <div class="carousel-slide" style="display:${i === 0 ? "block" : "none"};width:100%;height:100%;cursor:zoom-in;position:relative;" onclick="openLightbox('${p.id}',${i})">
             <img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
             <div class="img-expand-hint" style="position:absolute;inset:0;border-radius:12px;background:transparent;display:flex;align-items:center;justify-content:center;transition:background .2s;">
               <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0;transition:opacity .2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
             </div>
           </div>`;
-      }).join("");
-      const counter = imgs.length > 1
-        ? `<div class="carousel-counter" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;z-index:3;pointer-events:none;">1 / ${imgs.length}</div>`
-        : "";
-      const dots = imgs.length > 1 ? `<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;">
-        ${imgs.map(function (_, i) {
-          return `<span class="carousel-dot" style="width:7px;height:7px;border-radius:50%;background:${i === 0 ? "#fff" : "rgba(255,255,255,0.4)"};display:inline-block;cursor:pointer;transition:background .2s;" onclick="event.stopPropagation();goSlide('${p.id}',${i})"></span>`;
-        }).join("")}
-      </div>` : "";
-      const arrows = imgs.length > 1 ? `
+        })
+        .join("");
+      const counter =
+        imgs.length > 1
+          ? `<div class="carousel-counter" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em;z-index:3;pointer-events:none;">1 / ${imgs.length}</div>`
+          : "";
+      const dots =
+        imgs.length > 1
+          ? `<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;">
+        ${imgs
+          .map(function (_, i) {
+            return `<span class="carousel-dot" style="width:7px;height:7px;border-radius:50%;background:${i === 0 ? "#fff" : "rgba(255,255,255,0.4)"};display:inline-block;cursor:pointer;transition:background .2s;" onclick="event.stopPropagation();goSlide('${p.id}',${i})"></span>`;
+          })
+          .join("")}
+      </div>`
+          : "";
+      const arrows =
+        imgs.length > 1
+          ? `
         <button onclick="event.stopPropagation();prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
-        <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>` : "";
+        <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>`
+          : "";
       return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);">
         ${slides}${counter}${arrows}${dots}
       </div>`;
@@ -242,13 +259,15 @@ function goSlide(id, index) {
   const c = document.getElementById("carousel-" + id);
   if (!c) return;
   const slides = c.querySelectorAll(".carousel-slide");
-  slides.forEach(function (s, i) { s.style.display = i === index ? "block" : "none"; });
+  slides.forEach(function (s, i) {
+    s.style.display = i === index ? "block" : "none";
+  });
   c.dataset.current = index;
   c.querySelectorAll(".carousel-dot").forEach(function (dot, i) {
     dot.style.background = i === index ? "#fff" : "rgba(255,255,255,0.4)";
   });
   const counter = c.querySelector(".carousel-counter");
-  if (counter) counter.textContent = (index + 1) + " / " + slides.length;
+  if (counter) counter.textContent = index + 1 + " / " + slides.length;
 }
 function prevSlide(id) {
   const c = document.getElementById("carousel-" + id);
@@ -265,7 +284,9 @@ function nextSlide(id) {
 
 // ── Lightbox
 function openLightbox(projectId, startIndex) {
-  const p = data.projects.find(function (proj) { return proj.id === projectId; });
+  const p = data.projects.find(function (proj) {
+    return proj.id === projectId;
+  });
   if (!p) return;
   const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : [];
   if (imgs.length === 0) return;
@@ -273,19 +294,24 @@ function openLightbox(projectId, startIndex) {
   const existing = document.getElementById("lightbox");
   if (existing) existing.remove();
 
-  const thumbsHTML = imgs.length > 1
-    ? `<div style="display:flex;gap:8px;margin-top:16px;">
-        ${imgs.map(function (src, i) {
-          return `<img src="${src}" class="lb-thumb" data-index="${i}" onclick="lbGoTo(${i})"
+  const thumbsHTML =
+    imgs.length > 1
+      ? `<div style="display:flex;gap:8px;margin-top:16px;">
+        ${imgs
+          .map(function (src, i) {
+            return `<img src="${src}" class="lb-thumb" data-index="${i}" onclick="lbGoTo(${i})"
             style="width:60px;height:44px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid ${i === startIndex ? "#fff" : "transparent"};opacity:${i === startIndex ? "1" : "0.5"};transition:all .2s;" />`;
-        }).join("")}
-      </div>` : "";
+          })
+          .join("")}
+      </div>`
+      : "";
 
   const lb = document.createElement("div");
   lb.id = "lightbox";
   lb.dataset.projectId = projectId;
   lb.dataset.current = startIndex;
-  lb.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:lbFade .2s ease;";
+  lb.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:lbFade .2s ease;";
   lb.innerHTML = `
     <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:42px;height:42px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">✕</button>
     <div id="lb-counter" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:0.78rem;font-family:Poppins,sans-serif;letter-spacing:.05em;">${startIndex + 1} / ${imgs.length}</div>
@@ -296,7 +322,9 @@ function openLightbox(projectId, startIndex) {
   `;
 
   document.body.appendChild(lb);
-  lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+  lb.addEventListener("click", function (e) {
+    if (e.target === lb) closeLightbox();
+  });
   document.addEventListener("keydown", lbKeyHandler);
 }
 
@@ -315,12 +343,14 @@ function lbKeyHandler(e) {
 function lbGoTo(index) {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const p = data.projects.find(function (proj) {
+    return proj.id === lb.dataset.projectId;
+  });
   const imgs = p && p.imgs ? p.imgs : [];
   lb.dataset.current = index;
   document.getElementById("lb-img").src = imgs[index];
   const counter = document.getElementById("lb-counter");
-  if (counter) counter.textContent = (index + 1) + " / " + imgs.length;
+  if (counter) counter.textContent = index + 1 + " / " + imgs.length;
   lb.querySelectorAll(".lb-thumb").forEach(function (t, i) {
     t.style.border = i === index ? "2px solid #fff" : "2px solid transparent";
     t.style.opacity = i === index ? "1" : "0.5";
@@ -329,14 +359,18 @@ function lbGoTo(index) {
 function lbPrev() {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const p = data.projects.find(function (proj) {
+    return proj.id === lb.dataset.projectId;
+  });
   const total = p && p.imgs ? p.imgs.length : 0;
   lbGoTo((parseInt(lb.dataset.current) - 1 + total) % total);
 }
 function lbNext() {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) { return proj.id === lb.dataset.projectId; });
+  const p = data.projects.find(function (proj) {
+    return proj.id === lb.dataset.projectId;
+  });
   const total = p && p.imgs ? p.imgs.length : 0;
   lbGoTo((parseInt(lb.dataset.current) + 1) % total);
 }
@@ -408,16 +442,7 @@ function renderAboutPage() {
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta-banner">
-      <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;width:100%;">
-        <div>
-          <h2>${data.home.cta_banner}</h2>
-          <button class="btn btn-blue" onclick="showPage('contact')">Hire Me</button>
-        </div>
-    
-      </div>
-    </section>
+    ${ctaBannerHTML()}
   `;
 
   // socials — SVG icons
@@ -534,9 +559,10 @@ function renderProjectPage() {
 
   const tabsHTML = data.projects
     .map(function (p, i) {
-      const active = i === 0
-        ? "bg-blue-600 border-blue-600 text-white shadow-sm"
-        : "bg-white border-gray-200 text-gray-500 hover:border-blue-400 hover:text-blue-600";
+      const active =
+        i === 0
+          ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+          : "bg-white border-gray-200 text-gray-500 hover:border-blue-400 hover:text-blue-600";
       return `<button class="proj-tab px-5 py-2 rounded-full text-sm font-semibold border-2 cursor-pointer transition-all duration-200 ${active}"
         data-id="${p.id}" onclick="switchProject('${p.id}')">${p.title}</button>`;
     })
@@ -579,35 +605,47 @@ function renderProjectPage() {
     })
     .join("");
 
-  const otherHTML = (data.other_projects || []).map(function (group) {
-    const cards = group.items.map(function (item) {
-      const preview = item.img
-        ? `<div class="other-proj-preview" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:200px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.15);border:1px solid #e5e7eb;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;">
-              <img src="${item.img}" style="width:100%;height:120px;object-fit:cover;" />
-              <div style="padding:8px 10px;">
-                <p style="font-size:0.75rem;font-weight:600;color:#111827;">${item.name}</p>
-                <p style="font-size:0.68rem;color:#9ca3af;">${item.tech}</p>
+  const otherHTML = (data.other_projects || [])
+    .map(function (group) {
+      const cards = group.items
+        .map(function (item) {
+          const thumbSrc =
+            item.imgs && item.imgs.length ? item.imgs[0] : item.img || null;
+          const imgCount = item.imgs ? item.imgs.length : item.img ? 1 : 0;
+          const preview = thumbSrc
+            ? `<div class="other-proj-preview" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:210px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.16);border:1px solid #e5e7eb;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;">
+              <img src="${thumbSrc}" style="width:100%;height:120px;object-fit:cover;" />
+              <div style="padding:10px 12px;display:flex;align-items:center;justify-content:space-between;">
+                <div>
+                  <p style="font-size:0.75rem;font-weight:600;color:#111827;margin:0;">${item.name}</p>
+                  <p style="font-size:0.68rem;color:#9ca3af;margin:0;">${item.tech}</p>
+                </div>
+                ${imgCount > 1 ? `<span style="font-size:0.63rem;font-weight:700;color:#1e56e8;background:#eff6ff;border:1px solid #bfdbfe;padding:2px 7px;border-radius:20px;white-space:nowrap;">${imgCount} photos</span>` : ""}
               </div>
             </div>`
-        : "";
-      return `
-        <div class="other-proj-card" style="position:relative;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:default;transition:border-color .2s,box-shadow .2s;"
-          onmouseenter="this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
-          onmouseleave="this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
+            : "";
+          return `
+        <div class="other-proj-card" style="position:relative;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer;transition:border-color .2s,box-shadow .2s;"
+          onclick="openOtherProjectModal('${item.name.replace(/'/g, "\\'")}')"
+          onmouseenter="this.style.borderColor='#bfdbfe';this.style.boxShadow='0 4px 16px rgba(30,86,232,0.10)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
+          onmouseleave="this.style.borderColor='#f3f4f6';this.style.boxShadow='0 1px 4px rgba(0,0,0,0.04)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
           ${preview}
           <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-base flex-shrink-0">${group.icon}</div>
-          <div class="min-w-0">
+          <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-gray-800 truncate">${item.name}</p>
             <p class="text-xs text-gray-400">${item.tech}</p>
           </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </div>`;
-    }).join("");
-    return `
+        })
+        .join("");
+      return `
       <div class="mb-6">
         <h4 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">${group.category}</h4>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
       </div>`;
-  }).join("");
+    })
+    .join("");
 
   el.innerHTML = `
     <div class="max-w-[900px] w-full mx-auto px-6 py-12">
@@ -622,22 +660,22 @@ function renderProjectPage() {
 
       <!-- Other Projects -->
       <div class="mt-12">
-        <div class="flex items-center gap-3 mb-6">
+        <div class="flex items-center gap-3 mb-4">
           <div class="flex-1 h-px bg-gray-100"></div>
           <p class="text-xs font-bold text-gray-400 tracking-widest uppercase">Other Projects</p>
           <div class="flex-1 h-px bg-gray-100"></div>
         </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;background:#f8faff;border:1px solid #e0eaff;border-radius:10px;padding:11px 15px;margin-bottom:20px;">
+          <span style="font-size:0.95rem;flex-shrink:0;margin-top:1px;">💡</span>
+          <p style="font-size:0.75rem;color:#6b7280;margin:0;line-height:1.6;font-family:Poppins,sans-serif;">
+            These projects were built using <strong style="color:#374151;">React, Tailwind CSS, Android Java, and WordPress</strong> to showcase my skills in
+            <strong style="color:#374151;">frontend, mobile, and CMS development</strong>. Click any card to view screenshots.
+          </p>
+        </div>
         ${otherHTML}
       </div>
     </div>
-    <section class="cta-banner">
-      <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;width:100%;">
-        <div>
-          <h2>${data.home.cta_banner}</h2>
-          <button class="btn btn-blue" onclick="showPage('contact')">Hire Me</button>
-        </div>
-      </div>
-    </section>
+    ${ctaBannerHTML()}
   `;
 }
 
@@ -771,7 +809,12 @@ function switchProject(id) {
     d.classList.add("hidden");
   });
   document.querySelectorAll(".proj-tab").forEach(function (t) {
-    t.classList.remove("bg-blue-600", "border-blue-600", "text-white", "shadow-sm");
+    t.classList.remove(
+      "bg-blue-600",
+      "border-blue-600",
+      "text-white",
+      "shadow-sm",
+    );
     t.classList.add("bg-white", "border-gray-200", "text-gray-500");
   });
   const panel = document.getElementById("detail-" + id);
@@ -782,7 +825,12 @@ function switchProject(id) {
   const tab = document.querySelector(`.proj-tab[data-id="${id}"]`);
   if (tab) {
     tab.classList.remove("bg-white", "border-gray-200", "text-gray-500");
-    tab.classList.add("bg-blue-600", "border-blue-600", "text-white", "shadow-sm");
+    tab.classList.add(
+      "bg-blue-600",
+      "border-blue-600",
+      "text-white",
+      "shadow-sm",
+    );
   }
 }
 
@@ -798,29 +846,80 @@ function showProjectDetail(id) {
 // ═══════════════════════════════════════════
 function renderContactPage() {
   const c = data.contact;
+  const m = data.meta;
   const el = document.getElementById("page-contact");
 
-  const words = c.heading.split(" ");
-  const headHTML = words
-    .map(function (w) {
-      return w === "WORK" ? `<span class="highlight">${w}</span>` : w;
+  const socialSVGs = {
+    gmail: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.09l8.073-5.6C21.69 2.28 24 3.434 24 5.457z" fill="currentColor"/></svg>`,
+    linkedin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/></svg>`,
+    github: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="currentColor"/></svg>`,
+  };
+
+  const socialsHTML = m.socials
+    .map(function (s) {
+      return `<a href="${s.url}" class="contact-social-btn" target="${s.icon === "gmail" ? "_self" : "_blank"}" title="${s.label}">
+      ${socialSVGs[s.icon] || s.label}
+      <span>${s.label}</span>
+    </a>`;
     })
-    .join(" ");
+    .join("");
 
   el.innerHTML = `
-    <div class="contact-wrap">
-      <div class="contact-top">
-        <h1 class="contact-title">${headHTML}</h1>
-        <p class="contact-sub">${c.sub}</p>
-      </div>
-      <div class="contact-right">
-        <h3 class="form-heading">Let's make it happen</h3>
-        <div class="form-group">
-          <input  type="text"  class="form-input" id="cName"  placeholder="Name"    />
-          <input  type="email" class="form-input" id="cEmail" placeholder="Email"   />
-          <textarea            class="form-input" id="cMsg"   placeholder="Message" rows="4"></textarea>
-          <button class="btn-send" onclick="submitContact()">Send Message</button>
+    <div class="contact-page-wrap">
+
+      <!-- Decorative blobs -->
+      <div class="c-blob c-blob-1"></div>
+      <div class="c-blob c-blob-2"></div>
+
+      <div class="contact-grid">
+
+        <!-- LEFT: info panel -->
+        <div class="contact-info-panel">
+          <p class="c-eyebrow">GET IN TOUCH</p>
+          <h1 class="c-big-title">Let's Build<br/>Something <span>Great.</span></h1>
+          <p class="c-desc">Have a project in mind or looking for a developer to join your team? I'd love to hear from you.</p>
+
+          <div class="c-details">
+            <div class="c-detail-row">
+              <div class="c-detail-icon">✉</div>
+              <div>
+                <p class="c-detail-label">Email</p>
+                <a href="mailto:${m.email}" class="c-detail-value">${m.email}</a>
+              </div>
+            </div>
+            <div class="c-detail-row">
+              <div class="c-detail-icon">📞</div>
+              <div>
+                <p class="c-detail-label">Phone</p>
+                <p class="c-detail-value">${m.phone}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="c-socials">${socialsHTML}</div>
         </div>
+
+        <!-- RIGHT: form -->
+        <div class="contact-form-panel">
+          <h3 class="c-form-title">Send a Message</h3>
+          <p class="c-form-sub">I usually respond within 24 hours.</p>
+          <div class="form-group">
+            <div class="form-field">
+              <label class="form-label">Your Name</label>
+              <input type="text" class="form-input" id="cName" placeholder="e.g. Juan Dela Cruz" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="cEmail" placeholder="you@email.com" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Message</label>
+              <textarea class="form-input" id="cMsg" placeholder="Tell me about your project or idea..." rows="5"></textarea>
+            </div>
+            <button class="btn-send" onclick="submitContact()">Send Message &rarr;</button>
+          </div>
+        </div>
+
       </div>
     </div>
   `;
@@ -849,6 +948,9 @@ function renderFooter() {
   const m = data.meta;
   const socLinks = m.socials
     .map(function (s) {
+      if (s.icon === "gmail") {
+        return `<a href="#" class="foot-social" onclick="showPage('contact');return false;">${s.label}</a>`;
+      }
       return `<a href="${s.url}" class="foot-social" target="_blank">${s.label}</a>`;
     })
     .join("");
@@ -1215,6 +1317,152 @@ function hexToRgba(hex, alpha) {
   const g = (num >> 8) & 255;
   const b = num & 255;
   return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ═══════════════════════════════════════════
+// OTHER PROJECTS MODAL
+// ═══════════════════════════════════════════
+var _opm = { imgs: [], current: 0 };
+
+function openOtherProjectModal(name) {
+  var item = null;
+  (data.other_projects || []).forEach(function (group) {
+    group.items.forEach(function (it) {
+      if (it.name === name) item = it;
+    });
+  });
+  if (!item) return;
+
+  _opm.imgs =
+    item.imgs && item.imgs.length ? item.imgs : item.img ? [item.img] : [];
+  _opm.current = 0;
+  if (_opm.imgs.length === 0) return;
+
+  var existing = document.getElementById("otherProjModal");
+  if (existing) existing.remove();
+
+  var thumbsHTML = _opm.imgs
+    .map(function (src, i) {
+      return `<img src="${src}" class="opm-thumb" onclick="opmGoTo(${i})"
+      style="width:60px;height:42px;object-fit:cover;border-radius:7px;cursor:pointer;
+             border:2px solid ${i === 0 ? "#1e56e8" : "transparent"};
+             opacity:${i === 0 ? "1" : "0.5"};transition:all .2s;flex-shrink:0;" />`;
+    })
+    .join("");
+
+  var modal = document.createElement("div");
+  modal.id = "otherProjModal";
+  modal.style.cssText =
+    "position:fixed;inset:0;background:rgba(8,12,30,0.78);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
+
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
+                box-shadow:0 32px 80px rgba(0,0,0,0.35);display:flex;flex-direction:column;max-height:90vh;">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #f3f4f6;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;
+                      display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🖥️</div>
+          <div>
+            <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 3px;font-family:Poppins,sans-serif;">${item.name}</h3>
+            <span style="font-size:0.68rem;font-weight:600;color:#1e56e8;background:#eff6ff;
+                         border:1px solid #bfdbfe;padding:2px 9px;border-radius:20px;font-family:Poppins,sans-serif;">${item.tech}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:0.7rem;color:#9ca3af;font-family:Poppins,sans-serif;">${_opm.imgs.length} image${_opm.imgs.length > 1 ? "s" : ""}</span>
+          <button onclick="closeOtherProjModal()"
+            style="background:#f3f4f6;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
+                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#6b7280;
+                   transition:background .2s;flex-shrink:0;"
+            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">✕</button>
+        </div>
+      </div>
+
+      <!-- Main Image -->
+      <div style="position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
+        <img id="opm-main-img" src="${_opm.imgs[0]}"
+          style="max-width:100%;max-height:440px;object-fit:contain;display:block;" />
+        ${
+          _opm.imgs.length > 1
+            ? `
+          <div id="opm-counter"
+            style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.55);color:#fff;
+                   font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:20px;
+                   font-family:Poppins,sans-serif;letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
+          <button onclick="opmPrev()"
+            style="position:absolute;left:14px;top:50%;transform:translateY(-50%);
+                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
+                   align-items:center;justify-content:center;transition:background .2s;
+                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+            onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">‹</button>
+          <button onclick="opmNext()"
+            style="position:absolute;right:14px;top:50%;transform:translateY(-50%);
+                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
+                   align-items:center;justify-content:center;transition:background .2s;
+                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+            onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">›</button>
+        `
+            : ""
+        }
+      </div>
+
+      <!-- Thumbnail Strip -->
+      ${
+        _opm.imgs.length > 1
+          ? `
+        <div id="opm-thumbs"
+          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#f9fafb;
+                 border-top:1px solid #f3f4f6;flex-shrink:0;scrollbar-width:thin;">
+          ${thumbsHTML}
+        </div>
+      `
+          : ""
+      }
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeOtherProjModal();
+  });
+  document.addEventListener("keydown", _opmKeyHandler);
+}
+
+function closeOtherProjModal() {
+  var modal = document.getElementById("otherProjModal");
+  if (modal) modal.remove();
+  document.removeEventListener("keydown", _opmKeyHandler);
+}
+
+function _opmKeyHandler(e) {
+  if (e.key === "Escape") closeOtherProjModal();
+  if (e.key === "ArrowLeft") opmPrev();
+  if (e.key === "ArrowRight") opmNext();
+}
+
+function opmGoTo(index) {
+  var modal = document.getElementById("otherProjModal");
+  if (!modal) return;
+  _opm.current = index;
+  document.getElementById("opm-main-img").src = _opm.imgs[index];
+  var counter = document.getElementById("opm-counter");
+  if (counter) counter.textContent = index + 1 + " / " + _opm.imgs.length;
+  modal.querySelectorAll(".opm-thumb").forEach(function (t, i) {
+    t.style.border =
+      i === index ? "2px solid #1e56e8" : "2px solid transparent";
+    t.style.opacity = i === index ? "1" : "0.5";
+  });
+}
+
+function opmPrev() {
+  opmGoTo((_opm.current - 1 + _opm.imgs.length) % _opm.imgs.length);
+}
+function opmNext() {
+  opmGoTo((_opm.current + 1) % _opm.imgs.length);
 }
 
 // ═══════════════════════════════════════════
