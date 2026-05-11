@@ -1,68 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta -->
-    <title>Jhonas Sotero | Full Stack Web Developer</title>
-    <meta name="description" content="Portfolio of Jhonas Sotero — Full Stack Web Developer skilled in React, PHP, JavaScript, and Android Development. Available for freelance and full-time roles." />
-    <meta name="author" content="Jhonas Sotero" />
-    <meta name="keywords" content="Jhonas Sotero, Full Stack Developer, React Developer, PHP Developer, Android Developer, Web Developer Philippines, Portfolio" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph (for link previews on Facebook, LinkedIn, etc.) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Jhonas Sotero | Full Stack Web Developer" />
-    <meta property="og:description" content="Full Stack Web Developer skilled in React, PHP, JavaScript, and Android. National Champion — Tagisan ng Talino: Codefest 2025." />
-    <meta property="og:image" content="img/photos/my_photo.png" />
-    <meta property="og:url" content="" />
+  <!-- Primary Meta -->
+  <title>Sotero | Full Stack Web Developer</title>
+  <meta name="description"
+    content="Portfolio of Jhonas Sotero — Full Stack Web Developer skilled in React, PHP, JavaScript, and Android Development. Available for freelance and full-time roles." />
+  <meta name="author" content="Jhonas Sotero" />
+  <meta name="keywords"
+    content="Jhonas Sotero, Full Stack Developer, React Developer, PHP Developer, Android Developer, Web Developer Philippines, Portfolio" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jhonas Sotero | Full Stack Web Developer" />
-    <meta name="twitter:description" content="Full Stack Web Developer skilled in React, PHP, JavaScript, and Android." />
-    <meta name="twitter:image" content="img/photos/my_photo.png" />
+  <!-- Open Graph (for link previews on Facebook, LinkedIn, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Jhonas Sotero | Full Stack Web Developer" />
+  <meta property="og:description"
+    content="Full Stack Web Developer skilled in React, PHP, JavaScript, and Android. National Champion — Tagisan ng Talino: Codefest 2025." />
+  <meta property="og:image" content="img/photos/my_photo.png" />
+  <meta property="og:url" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/logos/jns-logo.png" />
-    <link rel="apple-touch-icon" href="img/logos/jns-logo.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jhonas Sotero | Full Stack Web Developer" />
+  <meta name="twitter:description" content="Full Stack Web Developer skilled in React, PHP, JavaScript, and Android." />
+  <meta name="twitter:image" content="img/photos/my_photo.png" />
 
-    <!-- Styles & Fonts -->
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <!-- NAVBAR — content injected by JS -->
-    <nav class="navbar">
-      <a
-        class="logo"
-        id="navLogo"
-        href="#"
-        onclick="
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="img/logos/favicon.ico" />
+  <link rel="apple-touch-icon" href="img/logos/jns-logo.png" />
+
+  <!-- Styles & Fonts -->
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <!-- NAVBAR — content injected by JS -->
+  <nav class="navbar">
+    <a class="logo" id="navLogo" href="#" onclick="
           showPage('home');
           return false;
-        "
-      ></a>
-      <ul class="nav-links" id="navLinks"></ul>
-      <button class="hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
+        "></a>
+    <ul class="nav-links" id="navLinks"></ul>
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-    <!-- PAGES — fully rendered by script.js from portfolio.json -->
-    <div id="page-home" class="page"></div>
-    <div id="page-about" class="page"></div>
-    <div id="page-project" class="page"></div>
-    <div id="page-contact" class="page"></div>
-    <div id="page-dynamic" class="page"></div>
+  <!-- PAGES — fully rendered by script.js from portfolio.json -->
+  <div id="page-home" class="page"></div>
+  <div id="page-about" class="page"></div>
+  <div id="page-project" class="page"></div>
+  <div id="page-contact" class="page"></div>
+  <div id="page-dynamic" class="page"></div>
 
-    <!-- FOOTER — rendered by JS -->
-    <footer class="site-footer" id="siteFooter"></footer>
+  <!-- FOOTER — rendered by JS -->
+  <footer class="site-footer" id="siteFooter"></footer>
 
-    <script src="script.js"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>

@@ -1,4 +1,11 @@
 // ─────────────────────────────────────────
+// EmailJS config — fill in your credentials
+// ─────────────────────────────────────────
+var EMAILJS_PUBLIC_KEY  = "ND9MNOl_0ixeKes-u";
+var EMAILJS_SERVICE_ID  = "service_g0ns8hj";
+var EMAILJS_TEMPLATE_ID = "template_maq7tya";
+
+// ─────────────────────────────────────────
 // In-memory data store
 // ─────────────────────────────────────────
 let data = {};
@@ -212,7 +219,7 @@ function thumbHTML(p, size) {
         <button onclick="event.stopPropagation();prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
         <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>`
           : "";
-      return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);">
+      return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);background:#ffffff;">
         ${slides}${counter}${arrows}${dots}
       </div>`;
     }
@@ -926,19 +933,88 @@ function renderContactPage() {
 }
 
 function submitContact() {
-  const name = document.getElementById("cName").value.trim();
-  const email = document.getElementById("cEmail").value.trim();
-  const msg = document.getElementById("cMsg").value.trim();
+  var name  = document.getElementById("cName").value.trim();
+  var email = document.getElementById("cEmail").value.trim();
+  var msg   = document.getElementById("cMsg").value.trim();
+
   if (!name || !email || !msg) {
-    alert("Please fill in all fields.");
+    showContactNotif("error", "Please fill in all fields before sending.");
     return;
   }
-  alert(
-    `Thanks ${name}! Your message has been received. I'll get back to you soon.`,
-  );
-  ["cName", "cEmail", "cMsg"].forEach(function (id) {
-    document.getElementById(id).value = "";
+
+  var btn = document.querySelector(".btn-send");
+  btn.textContent = "Sending…";
+  btn.disabled = true;
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    from_name:  name,
+    from_email: email,
+    message:    msg,
+    to_email:   data.contact.email
+  }).then(function () {
+    btn.textContent = "Send Message →";
+    btn.disabled = false;
+    showContactNotif("success", name);
+    ["cName", "cEmail", "cMsg"].forEach(function (id) {
+      document.getElementById(id).value = "";
+    });
+  }).catch(function () {
+    btn.textContent = "Send Message →";
+    btn.disabled = false;
+    showContactNotif("error", "Something went wrong. Please email me directly at <strong style='color:#1e56e8;'>" + data.contact.email + "</strong>.");
   });
+}
+
+function showContactNotif(type, payload) {
+  var existing = document.getElementById("contactNotif");
+  if (existing) existing.remove();
+
+  var isSuccess = type === "success";
+
+  var modal = document.createElement("div");
+  modal.id = "contactNotif";
+  modal.style.cssText = "position:fixed;inset:0;background:rgba(8,12,30,0.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;";
+
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:380px;padding:2.5rem 2rem 2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.22);font-family:Poppins,sans-serif;">
+
+      <!-- Icon -->
+      <div style="width:66px;height:66px;border-radius:50%;
+                  background:${isSuccess ? "#ecfdf5" : "#fef2f2"};
+                  border:2px solid ${isSuccess ? "#bbf7d0" : "#fecaca"};
+                  display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+        ${isSuccess
+          ? `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+          : `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+        }
+      </div>
+
+      <!-- Title -->
+      <h3 style="font-size:1.05rem;font-weight:700;color:#111827;margin:0 0 0.5rem;">
+        ${isSuccess ? "Message Sent!" : "Oops!"}
+      </h3>
+
+      <!-- Body -->
+      <p style="font-size:0.83rem;color:#6b7280;margin:0 0 1.75rem;line-height:1.7;">
+        ${isSuccess
+          ? `Thanks <strong style="color:#111827;">${payload}</strong>! Your message has been received. I'll get back to you soon.`
+          : payload}
+      </p>
+
+      <!-- Button -->
+      <button onclick="document.getElementById('contactNotif').remove()"
+        style="width:100%;padding:0.72rem;border-radius:10px;background:#1e56e8;color:#fff;border:none;
+               font-family:Poppins,sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;
+               transition:background .2s;box-shadow:0 4px 14px rgba(30,86,232,0.25);"
+        onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
+        Got it
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  modal.addEventListener("click", function (e) { if (e.target === modal) modal.remove(); });
 }
 
 // ═══════════════════════════════════════════
