@@ -158,7 +158,8 @@
       "detail": "Built with React 19, Vite, Tailwind CSS v4, TanStack React Query v5, PHP, MySQL, and JWT. Includes RESTful API, OTP email verification, real-time POS with cart, discounts, payments, and automatic inventory updates.",
       "imgs": ["img/project%20images/Centrasuite/centra1.png"],
       "thumb_type": "screen",
-      "color": "#1e56e8"
+      "color": "#1e56e8",
+      "github": "https://github.com/Jhonas028/centrasuite"
     },
     {
       "id": "essay",
@@ -169,7 +170,8 @@
       "imgs": ["img/projects/smartessay.png"],
       "thumb_type": "label",
       "thumb_label": "SMART ESSAY",
-      "color": "#1e56e8"
+      "color": "#1e56e8",
+      "github": "https://github.com/Jhonas028/SmartEssay"
     },
     {
       "id": "hris",
@@ -180,7 +182,8 @@
       "imgs": ["img/project%20images/HRIS/hris1.png"],
       "thumb_type": "label",
       "thumb_label": "HRIS",
-      "color": "#1e56e8"
+      "color": "#1e56e8",
+      "github": "https://github.com/Jhonas028/viter-hris"
     },
     {
       "id": "kuya",
@@ -191,7 +194,8 @@
       "imgs": ["img/projects/tricylcle.png"],
       "thumb_type": "emoji",
       "thumb_label": "🛺",
-      "color": "#059669"
+      "color": "#059669",
+      "github": "https://github.com/Jhonas028/KuyaApplication"
     }
   ],
 
@@ -200,21 +204,21 @@
       "category": "Web Apps / React",
       "icon": "🌐",
       "items": [
-        { "name": "FinExpert", "tech": "React, Vite", "imgs": ["img/project%20images/FinExpert/fin1.png", "img/project%20images/FinExpert/fin2.png", "img/project%20images/FinExpert/fin3.png", "img/project%20images/FinExpert/fin4.png"] },
-        { "name": "Business Blog", "tech": "React", "imgs": ["img/project%20images/Business%20Blog/business1.png", "img/project%20images/Business%20Blog/business2.png", "img/project%20images/Business%20Blog/business3.png", "img/project%20images/Business%20Blog/business4.png"] },
-        { "name": "DeepBlue", "tech": "React, Vite", "imgs": ["img/project%20images/DeepBlue/deep1.png", "img/project%20images/DeepBlue/deep2.png", "img/project%20images/DeepBlue/deep3.png", "img/project%20images/DeepBlue/deep4.png", "img/project%20images/DeepBlue/deep5.png", "img/project%20images/DeepBlue/deep6.png"] },
-        { "name": "Fitness Website", "tech": "React, Tailwind", "imgs": ["img/project%20images/Fitness/fit1.png", "img/project%20images/Fitness/fit2.png", "img/project%20images/Fitness/fit4.png"] },
-        { "name": "Get Pizza", "tech": "React", "imgs": ["img/project%20images/Get%20Pizza/pizza1.png", "img/project%20images/Get%20Pizza/pizza2.png", "img/project%20images/Get%20Pizza/pizza3.png"] },
-        { "name": "Recipe Site", "tech": "React", "imgs": ["img/project%20images/Recipe/recipe1.png", "img/project%20images/Recipe/recipe2.png", "img/project%20images/Recipe/recipe3.png", "img/project%20images/Recipe/recipe4.png", "img/project%20images/Recipe/recipe5.png", "img/project%20images/Recipe/recipe6.png"] }
+        { "name": "FinExpert", "tech": "React, Vite", "github": "https://github.com/Jhonas028/React-FinExpert", "imgs": ["img/project%20images/FinExpert/fin1.png", "img/project%20images/FinExpert/fin2.png", "img/project%20images/FinExpert/fin3.png", "img/project%20images/FinExpert/fin4.png"] },
+        { "name": "Business Blog", "tech": "React", "github": "https://github.com/Jhonas028/React-Business-Blog", "imgs": ["img/project%20images/Business%20Blog/business1.png", "img/project%20images/Business%20Blog/business2.png", "img/project%20images/Business%20Blog/business3.png", "img/project%20images/Business%20Blog/business4.png"] },
+        { "name": "DeepBlue", "tech": "React, Vite", "github": "https://github.com/Jhonas028/React-DeepBlue", "imgs": ["img/project%20images/DeepBlue/deep1.png", "img/project%20images/DeepBlue/deep2.png", "img/project%20images/DeepBlue/deep3.png", "img/project%20images/DeepBlue/deep4.png", "img/project%20images/DeepBlue/deep5.png", "img/project%20images/DeepBlue/deep6.png"] },
+        { "name": "Fitness Website", "tech": "React, Tailwind", "github": "https://github.com/Jhonas028/SASS-FITNESS---SOTERO", "imgs": ["img/project%20images/Fitness/fit1.png", "img/project%20images/Fitness/fit2.png", "img/project%20images/Fitness/fit4.png"] },
+        { "name": "Get Pizza", "tech": "React", "github": "https://github.com/Jhonas028/Get-Pizza-Sotero", "imgs": ["img/project%20images/Get%20Pizza/pizza1.png", "img/project%20images/Get%20Pizza/pizza2.png", "img/project%20images/Get%20Pizza/pizza3.png"] },
+        { "name": "Recipe Site", "tech": "React", "github": "https://github.com/Jhonas028/RECIPE-SOTERO", "imgs": ["img/project%20images/Recipe/recipe1.png", "img/project%20images/Recipe/recipe2.png", "img/project%20images/Recipe/recipe3.png", "img/project%20images/Recipe/recipe4.png", "img/project%20images/Recipe/recipe5.png", "img/project%20images/Recipe/recipe6.png"] }
       ]
     },
     {
       "category": "WordPress",
       "icon": "🔵",
       "items": [
-        { "name": "CVD Awareness", "tech": "WordPress", "imgs": ["img/project%20images/CVD/cvd1.png", "img/project%20images/CVD/cvd2.png", "img/project%20images/CVD/cvd3.png"] },
-        { "name": "Cosmos", "tech": "WordPress", "imgs": ["img/project%20images/cosmos/cosmos1.png", "img/project%20images/cosmos/cosmos2.png", "img/project%20images/cosmos/cosmos3.png", "img/project%20images/cosmos/cosmos4.png"] },
-        { "name": "Beyond Borders", "tech": "WordPress", "imgs": ["img/project%20images/BeyondBorder/beyond1.png", "img/project%20images/BeyondBorder/beyond2.png", "img/project%20images/BeyondBorder/beyond3.png", "img/project%20images/BeyondBorder/beyond4.png"] }
+        { "name": "CVD Awareness", "tech": "WordPress", "github": "https://github.com/Jhonas028/CVD-SOTERO", "imgs": ["img/project%20images/CVD/cvd1.png", "img/project%20images/CVD/cvd2.png", "img/project%20images/CVD/cvd3.png"] },
+        { "name": "Cosmos", "tech": "WordPress", "github": "https://github.com/Jhonas028/COSMOS-SOTERO", "imgs": ["img/project%20images/cosmos/cosmos1.png", "img/project%20images/cosmos/cosmos2.png", "img/project%20images/cosmos/cosmos3.png", "img/project%20images/cosmos/cosmos4.png"] },
+        { "name": "Beyond Borders", "tech": "WordPress", "github": "https://github.com/Jhonas028/BEYOND-BORDERS---SOTERO", "imgs": ["img/project%20images/BeyondBorder/beyond1.png", "img/project%20images/BeyondBorder/beyond2.png", "img/project%20images/BeyondBorder/beyond3.png", "img/project%20images/BeyondBorder/beyond4.png"] }
       ]
     }
   ],
