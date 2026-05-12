@@ -665,8 +665,8 @@ body {
 ════════════════════════════════════════════ */
 .about-hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 380px 1fr;
+  gap: 3.5rem;
   align-items: start;
 }
 
@@ -677,34 +677,51 @@ body {
 .about-photo-wrap::before {
   content: "";
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   background: var(--blue);
   border-radius: 50%;
-  top: 20px;
-  left: -20px;
+  top: -18px;
+  left: -18px;
+  z-index: 0;
+  opacity: 0.18;
+}
+.about-photo-wrap::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--blue-mid);
+  border-radius: 50%;
+  bottom: -14px;
+  right: -14px;
   z-index: 0;
 }
 
 .about-photo-box {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 7;
   position: relative;
   z-index: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(30, 86, 232, 0.13), 0 4px 16px rgba(0,0,0,0.08);
+  border: 4px solid #fff;
 }
 .about-photo-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: var(--radius);
+  object-position: top center;
+  border-radius: 12px;
   display: block;
 }
 
 .socials {
   display: flex;
   gap: 1.25rem;
-  margin-top: 1.25rem;
-  justify-content: flex-end;
+  margin-top: 1.5rem;
+  justify-content: flex-start;
 }
 .social-icon-link {
   display: flex;
@@ -730,25 +747,36 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   min-width: 0;
 }
 
 .about-big-title {
-  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-size: clamp(2.8rem, 7vw, 5rem);
   font-weight: 800;
   color: var(--blue);
   line-height: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.02em;
+}
+
+.about-bio {
+  background: var(--light);
+  border-left: 3px solid var(--blue-mid);
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .about-bio p {
   font-size: 0.875rem;
   color: var(--gray);
-  line-height: 1.8;
+  line-height: 1.85;
   margin-bottom: 0.75rem;
-  text-align: justify;
+  text-align: left;
+}
+.about-bio p:last-child {
+  margin-bottom: 0;
 }
 
 .highlight-word {
@@ -1699,6 +1727,10 @@ a.c-detail-value:hover { text-decoration: underline; }
   .about-big-title {
     font-size: clamp(2.5rem, 10vw, 4rem);
   }
+  .about-photo-box {
+    max-width: 320px;
+    margin-inline: auto;
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -1757,10 +1789,19 @@ a.c-detail-value:hover { text-decoration: underline; }
     font-size: clamp(2rem, 12vw, 3rem);
   }
   .about-photo-wrap::before {
-    width: 60px;
-    height: 60px;
-    top: 10px;
-    left: -10px;
+    width: 70px;
+    height: 70px;
+    top: -12px;
+    left: -12px;
+  }
+  .about-photo-wrap::after {
+    width: 40px;
+    height: 40px;
+    right: -8px;
+  }
+  .about-photo-box {
+    max-width: 280px;
+    margin-inline: auto;
   }
   .socials {
     justify-content: center;

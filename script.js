@@ -395,18 +395,18 @@ function renderAboutPage() {
       <div class="wrap">
         <div class="about-hero">
 
-          <!-- LEFT: photo + social icons -->
+          <!-- LEFT: photo -->
           <div class="about-photo-wrap">
             <div class="about-photo-box">
               ${a.photo ? `<img src="${a.photo}" alt="${data.meta.name}" />` : "👨‍💻"}
             </div>
-            <div class="socials" id="aboutSocials"></div>
           </div>
 
-          <!-- RIGHT: big title + bio -->
+          <!-- RIGHT: big title + bio + social icons -->
           <div class="about-right">
             <h1 class="about-big-title">ABOUT</h1>
             <div class="about-bio" id="aboutBio"></div>
+            <div class="socials" id="aboutSocials"></div>
           </div>
 
         </div>
