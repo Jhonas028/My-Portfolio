@@ -550,10 +550,22 @@ function renderAboutPage() {
   a.certifications.forEach(function (c) {
     const card = document.createElement("div");
     card.className = "cert-card";
+    if (c.imgs && c.imgs.length) {
+      card.style.cursor = "pointer";
+      card.onclick = function () { openCertModal(c); };
+    } else if (c.url) {
+      card.style.cursor = "pointer";
+      card.onclick = function () { window.open(c.url, "_blank", "noopener,noreferrer"); };
+    }
+    const badge = c.imgs && c.imgs.length
+      ? '<span style="font-size:0.68rem;color:var(--blue);font-weight:600;margin-left:4px;">📷</span>'
+      : c.url
+        ? '<span style="font-size:0.7rem;color:var(--blue);font-weight:600;margin-left:4px;">↗</span>'
+        : "";
     if (c.type === "text") {
-      card.innerHTML = `<div class="cert-text-logo">${c.logo_text}</div><p>${c.desc}</p>`;
+      card.innerHTML = `<div class="cert-text-logo">${c.logo_text}</div><p>${c.desc}${badge}</p>`;
     } else {
-      card.innerHTML = `<div class="cert-icon">${c.icon}</div><p>${c.desc}</p>`;
+      card.innerHTML = `<div class="cert-icon">${c.icon}</div><p>${c.desc}${badge}</p>`;
     }
     cg.appendChild(card);
   });
@@ -1569,6 +1581,104 @@ function opmPrev() {
 }
 function opmNext() {
   opmGoTo((_opm.current + 1) % _opm.imgs.length);
+}
+
+// ═══════════════════════════════════════════
+// CERT IMAGE MODAL
+// ═══════════════════════════════════════════
+function openCertModal(cert) {
+  _opm.imgs = cert.imgs;
+  _opm.current = 0;
+
+  var existing = document.getElementById("otherProjModal");
+  if (existing) existing.remove();
+
+  var thumbsHTML = _opm.imgs.map(function (src, i) {
+    return `<img src="${src}" class="opm-thumb" onclick="opmGoTo(${i})"
+      style="width:60px;height:42px;object-fit:cover;border-radius:7px;cursor:pointer;
+             border:2px solid ${i === 0 ? "#1e56e8" : "transparent"};
+             opacity:${i === 0 ? "1" : "0.5"};transition:all .2s;flex-shrink:0;" />`;
+  }).join("");
+
+  var modal = document.createElement("div");
+  modal.id = "otherProjModal";
+  modal.style.cssText =
+    "position:fixed;inset:0;background:rgba(8,12,30,0.78);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
+
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
+                box-shadow:0 32px 80px rgba(0,0,0,0.35);display:flex;flex-direction:column;max-height:90vh;">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #f3f4f6;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:#fefce8;border:1px solid #fde68a;
+                      display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🏆</div>
+          <div>
+            <h3 style="font-size:0.95rem;font-weight:700;color:#111827;margin:0 0 3px;font-family:Poppins,sans-serif;">${cert.desc}</h3>
+            <span style="font-size:0.68rem;font-weight:600;color:#d97706;background:#fefce8;
+                         border:1px solid #fde68a;padding:2px 9px;border-radius:20px;font-family:Poppins,sans-serif;">Award</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:0.7rem;color:#9ca3af;font-family:Poppins,sans-serif;">${_opm.imgs.length} photo${_opm.imgs.length > 1 ? "s" : ""}</span>
+          ${cert.url ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;
+                   background:#eff6ff;color:#1e56e8;font-size:0.72rem;font-weight:600;
+                   text-decoration:none;border:1px solid #bfdbfe;transition:background .2s;white-space:nowrap;"
+            onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+            View Proof ↗
+          </a>` : ""}
+          <button onclick="closeOtherProjModal()"
+            style="background:#f3f4f6;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
+                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#6b7280;
+                   transition:background .2s;flex-shrink:0;"
+            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">✕</button>
+        </div>
+      </div>
+
+      <!-- Main Image -->
+      <div style="position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
+        <img id="opm-main-img" src="${_opm.imgs[0]}"
+          style="max-width:100%;max-height:460px;object-fit:contain;display:block;" />
+        ${_opm.imgs.length > 1 ? `
+          <div id="opm-counter"
+            style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.55);color:#fff;
+                   font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:20px;
+                   font-family:Poppins,sans-serif;letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
+          <button onclick="opmPrev()"
+            style="position:absolute;left:14px;top:50%;transform:translateY(-50%);
+                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
+                   align-items:center;justify-content:center;transition:background .2s;
+                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+            onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">‹</button>
+          <button onclick="opmNext()"
+            style="position:absolute;right:14px;top:50%;transform:translateY(-50%);
+                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
+                   align-items:center;justify-content:center;transition:background .2s;
+                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+            onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">›</button>
+        ` : ""}
+      </div>
+
+      <!-- Thumbnail Strip -->
+      ${_opm.imgs.length > 1 ? `
+        <div id="opm-thumbs"
+          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#f9fafb;
+                 border-top:1px solid #f3f4f6;flex-shrink:0;scrollbar-width:thin;">
+          ${thumbsHTML}
+        </div>
+      ` : ""}
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeOtherProjModal();
+  });
+  document.addEventListener("keydown", _opmKeyHandler);
 }
 
 // ═══════════════════════════════════════════

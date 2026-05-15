@@ -123,7 +123,9 @@
       {
         "type": "icon",
         "icon": "🏆",
-        "desc": "Tagisan ng Talino: Codefest — National Champion 2025"
+        "desc": "Tagisan ng Talino: Codefest — National Champion 2025",
+        "url": "https://www.sti.edu/newsarticledetail1.asp?i=NTQw&p=dG50",
+        "imgs": ["img/national_champ/codefest1.png", "img/national_champ/codefest2.png"]
       },
       {
         "type": "icon",
@@ -132,18 +134,27 @@
       },
       {
         "type": "icon",
+        "icon": "💼",
+        "desc": "OJT Completion Certificate — Frontline Business Solutions, 480 Hours (2025)",
+        "imgs": ["img/certificates/fbs.png"]
+      },
+      {
+        "type": "icon",
         "icon": "🎓",
-        "desc": "Full Stack Web Development Certificate — Udemy, 2025"
+        "desc": "Full Stack Web Development Certificate — Udemy, 2025",
+        "url": "https://www.udemy.com/certificate/UC-46e811af-6219-4c7b-bd95-976688dec762/?utm_campaign=email&utm_medium=email&utm_source=sendgrid.com"
       },
       {
         "type": "icon",
         "icon": "☕",
-        "desc": "Java Fundamentals Certificate — Oracle Academy, 2023"
+        "desc": "Java Fundamentals Certificate — Oracle Academy, 2023",
+        "imgs": ["img/certificates/java.png"]
       },
       {
         "type": "icon",
         "icon": "🖥️",
-        "desc": "System Administration Certificate — 2024"
+        "desc": "System Administration Certificate — 2024",
+        "imgs": ["img/certificates/sap.png"]
       }
     ]
   },
