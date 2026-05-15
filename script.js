@@ -37,6 +37,7 @@ function renderAll() {
   renderDynamicPage();
   renderFooter();
   showPage("home");
+  initAnimations();
 }
 
 // ═══════════════════════════════════════════
@@ -498,7 +499,7 @@ function renderAboutPage() {
     <div class="exp-logo ${e.logo_class}">
       ${
         e.img
-          ? `<img src="${e.img}" alt="${e.company}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />`
+          ? `<img src="${e.img}" alt="${e.company}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;padding:4px;" />`
           : e.logo
       }
     </div>
@@ -1080,6 +1081,8 @@ function showPage(pageId) {
 
   const nl = document.getElementById("navLinks");
   if (nl) nl.classList.remove("open");
+
+  revealPageElements(pageId);
 }
 
 // ═══════════════════════════════════════════
@@ -1574,4 +1577,142 @@ function opmNext() {
 function toggleMenu() {
   const nl = document.getElementById("navLinks");
   if (nl) nl.classList.toggle("open");
+}
+
+// ═══════════════════════════════════════════
+// ANIMATIONS
+// ═══════════════════════════════════════════
+function initAnimations() {
+  addRevealAttributes();
+  initScrollReveal();
+  initNavbarScroll();
+  runTypewriter();
+}
+
+function addRevealAttributes() {
+  document.querySelectorAll(".section-title, .section-sub").forEach(function (el) {
+    el.setAttribute("data-reveal", "up");
+  });
+
+  document.querySelectorAll("#skillsGrid .card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String(i + 1));
+  });
+
+  var photoWrap = document.querySelector(".about-photo-wrap");
+  if (photoWrap) photoWrap.setAttribute("data-reveal", "left");
+
+  var aboutRight = document.querySelector(".about-right");
+  if (aboutRight) {
+    aboutRight.setAttribute("data-reveal", "right");
+    aboutRight.setAttribute("data-delay", "1");
+  }
+
+  document.querySelectorAll(".tech-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "scale");
+    el.setAttribute("data-delay", String((i % 8) + 1));
+  });
+
+  document.querySelectorAll(".exp-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "left");
+    el.setAttribute("data-delay", String(Math.min(i + 1, 8)));
+  });
+
+  document.querySelectorAll(".qual-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "right");
+    el.setAttribute("data-delay", String(Math.min(i + 1, 8)));
+  });
+
+  document.querySelectorAll(".cert-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String(Math.min(i + 1, 8)));
+  });
+
+  document.querySelectorAll(".soft-item").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "scale");
+    el.setAttribute("data-delay", String((i % 6) + 1));
+  });
+
+  document.querySelectorAll(".other-proj-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String((i % 6) + 1));
+  });
+
+  document.querySelectorAll(".c-form-group").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String(i + 1));
+  });
+
+  document.querySelectorAll(".c-info-item, .c-social-link").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "left");
+    el.setAttribute("data-delay", String((i % 4) + 1));
+  });
+
+  document.querySelectorAll("#homeProjectList > *").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String((i % 4) + 1));
+  });
+
+  var socials = document.querySelector("#aboutSocials");
+  if (socials) {
+    socials.setAttribute("data-reveal", "up");
+    socials.setAttribute("data-delay", "3");
+  }
+}
+
+var _revealObserver = null;
+
+function initScrollReveal() {
+  _revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        _revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+
+  document.querySelectorAll("[data-reveal]").forEach(function (el) {
+    _revealObserver.observe(el);
+  });
+}
+
+function revealPageElements(pageId) {
+  requestAnimationFrame(function () {
+    var page = document.getElementById("page-" + pageId);
+    if (!page) return;
+    page.querySelectorAll("[data-reveal]:not(.revealed)").forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add("revealed");
+      }
+    });
+  });
+}
+
+function initNavbarScroll() {
+  var navbar = document.querySelector(".navbar");
+  window.addEventListener("scroll", function () {
+    navbar.classList.toggle("scrolled", window.scrollY > 20);
+  }, { passive: true });
+}
+
+function runTypewriter() {
+  var highlight = document.querySelector(".hero-title .highlight");
+  if (!highlight) return;
+  var fullText = highlight.textContent;
+  highlight.textContent = "";
+  var cursor = document.createElement("span");
+  cursor.className = "tw-cursor";
+  highlight.after(cursor);
+  var i = 0;
+  function type() {
+    if (i < fullText.length) {
+      highlight.textContent += fullText[i++];
+      setTimeout(type, 65);
+    } else {
+      setTimeout(function () { cursor.remove(); }, 1800);
+    }
+  }
+  setTimeout(type, 650);
 }

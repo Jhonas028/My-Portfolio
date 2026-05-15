@@ -1865,3 +1865,161 @@ a.c-detail-value:hover { text-decoration: underline; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS & SCROLL REVEAL
+════════════════════════════════════════════ */
+
+/* ── Scroll reveal base ── */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal="up"]    { transform: translateY(36px); }
+[data-reveal="left"]  { transform: translateX(-36px); }
+[data-reveal="right"] { transform: translateX(36px); }
+[data-reveal="scale"] { transform: scale(0.87); }
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+[data-delay="1"] { transition-delay: 0.08s; }
+[data-delay="2"] { transition-delay: 0.16s; }
+[data-delay="3"] { transition-delay: 0.24s; }
+[data-delay="4"] { transition-delay: 0.32s; }
+[data-delay="5"] { transition-delay: 0.40s; }
+[data-delay="6"] { transition-delay: 0.48s; }
+[data-delay="7"] { transition-delay: 0.56s; }
+[data-delay="8"] { transition-delay: 0.64s; }
+
+/* ── Hero photo float — disabled ── */
+
+/* ── Hero badge pulse glow ── */
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(30, 86, 232, 0.3); }
+  55%       { box-shadow: 0 0 0 10px rgba(30, 86, 232, 0); }
+}
+.hero-badge {
+  animation: badgePulse 2.8s ease-in-out infinite;
+}
+
+/* ── Typewriter cursor ── */
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.82em;
+  background: var(--blue);
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: blinkCursor 0.8s step-end infinite;
+}
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Navbar scroll shadow ── */
+.navbar.scrolled {
+  box-shadow: 0 4px 24px rgba(30, 86, 232, 0.10);
+  border-bottom-color: transparent;
+}
+
+/* ── Section title animated underline ── */
+.section-title {
+  padding-bottom: 0.25rem;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), #7c9ff8);
+  border-radius: 2px;
+  margin: 8px auto 0;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+}
+.section-title.revealed::after {
+  width: 52px;
+}
+
+/* ── Skill card hover lift ── */
+.card {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s ease;
+}
+.card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 40px rgba(30, 86, 232, 0.14), 4px 4px 0 rgba(0,0,0,0.07);
+}
+
+/* ── Tech card hover ── */
+.tech-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.22s ease;
+}
+.tech-card:hover {
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 0 10px 24px rgba(30, 86, 232, 0.18);
+}
+
+/* ── Exp card hover ── */
+.exp-card:hover {
+  transform: translateX(5px) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 86, 232, 0.12);
+}
+
+/* ── Qual card hover ── */
+.qual-card:hover {
+  transform: translateX(5px) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 86, 232, 0.12);
+}
+
+/* ── Cert card hover ── */
+.cert-card {
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.24s ease,
+              background 0.24s ease;
+}
+.cert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(30, 86, 232, 0.12);
+  background: var(--blue-light);
+}
+
+/* ── Soft skill hover ── */
+.soft-item {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.soft-item:hover {
+  color: var(--blue);
+  transform: translateX(4px);
+}
+
+/* ── Social icon hover bounce ── */
+.social-icon-link {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.22s ease;
+}
+.social-icon-link:hover {
+  transform: translateY(-5px) scale(1.15);
+}
+
+/* ── Other project card hover ── */
+.other-proj-card {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease;
+}
+.other-proj-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ── CTA blob float ── */
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(12px, -8px) scale(1.08); }
+  66%       { transform: translate(-6px, 10px) scale(0.95); }
+}
+.cta-b1 { animation: blobFloat 9s ease-in-out infinite; }
+.cta-b2 { animation: blobFloat 11s ease-in-out infinite reverse; }

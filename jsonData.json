@@ -60,8 +60,7 @@
     ],
     "experience": [
       {
-        "img": "",
-        "logo": "💼",
+        "img": "img/logos/frontline.png",
         "logo_class": "fl",
         "company": "Frontline Business Solutions",
         "role": "Full Stack Development Intern",
