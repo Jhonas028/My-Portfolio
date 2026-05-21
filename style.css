@@ -126,21 +126,49 @@ body {
 .hamburger {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1001;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.hamburger:hover {
+  background: var(--blue-light);
 }
 .hamburger span {
   display: block;
   width: 22px;
   height: 2px;
   background: var(--dark);
-  border-radius: 2px;
-  transition: var(--t);
+  border-radius: 3px;
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.2s ease,
+              background 0.2s ease;
+  transform-origin: center;
 }
+.hamburger.open span { background: var(--blue); }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile nav overlay ── */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 58px;
+  background: rgba(8, 12, 30, 0.45);
+  z-index: 997;
+  backdrop-filter: blur(2px);
+  animation: lbFade 0.22s ease;
+}
+.nav-overlay.open { display: block; }
 
 /* ═══════════════════════════════════════════
    PAGE SYSTEM
@@ -1739,7 +1767,7 @@ a.c-detail-value:hover { text-decoration: underline; }
 @media (max-width: 520px) {
   /* NAV */
   .nav-links {
-    display: none;
+    display: flex;
     flex-direction: column;
     position: fixed;
     top: 58px;
@@ -1747,12 +1775,79 @@ a.c-detail-value:hover { text-decoration: underline; }
     right: 0;
     width: 100%;
     background: #fff;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0 1.25rem;
     z-index: 998;
+    box-shadow: 0 20px 60px rgba(30, 86, 232, 0.13);
+    border-bottom: 3px solid var(--blue);
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease,
+                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .nav-links.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .nav-links li {
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .nav-links li:last-child {
+    border-bottom: none;
+  }
+  .nav-link {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    padding: 0.9rem 1.5rem !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    border-radius: 0 !important;
+    color: #374151 !important;
+    background: transparent !important;
+    gap: 12px;
+  }
+  .nav-link::before { display: none; }
+  .nav-icon {
+    width: 34px;
+    height: 34px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue-light);
+    border-radius: 9px;
+    flex-shrink: 0;
+    color: var(--blue);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .nav-link:hover .nav-icon,
+  .nav-link.active .nav-icon {
+    background: var(--blue);
+    color: #fff;
+  }
+  .nav-link::after {
+    content: "›";
+    margin-left: auto;
+    font-size: 1.3rem;
+    color: #d1d5db;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .nav-link:hover {
+    background: #f9fafb !important;
+    color: var(--blue) !important;
+  }
+  .nav-link:hover::after {
+    transform: translateX(4px);
+    color: var(--blue);
+  }
+  .nav-link.active {
+    color: var(--blue) !important;
+    background: var(--blue-light) !important;
+  }
+  .nav-link.active::after {
+    color: var(--blue);
   }
   .hamburger {
     display: flex;

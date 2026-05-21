@@ -49,19 +49,23 @@ function renderNav() {
   document.title = data.meta.title;
 
   const pages = ["home", "about", "project", "contact"];
-  const labels = {
-    home: "Home",
-    about: "About",
-    project: "Project",
-    contact: "Contact",
+  const labels = { home: "Home", about: "About", project: "Project", contact: "Contact" };
+  const icons = {
+    home:    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>`,
+    about:   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`,
+    project: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
+    contact: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg>`,
   };
+
   const ul = document.getElementById("navLinks");
   ul.innerHTML = "";
 
   pages.forEach(function (p) {
     const li = document.createElement("li");
     li.innerHTML = `<a href="#" class="nav-link" data-page="${p}"
-      onclick="showPage('${p}'); return false;">${labels[p]}</a>`;
+      onclick="showPage('${p}'); return false;">
+      <span class="nav-icon">${icons[p]}</span>${labels[p]}
+    </a>`;
     ul.appendChild(li);
   });
 }
@@ -1091,9 +1095,7 @@ function showPage(pageId) {
     if (link.dataset.page === pageId) link.classList.add("active");
   });
 
-  const nl = document.getElementById("navLinks");
-  if (nl) nl.classList.remove("open");
-
+  closeMenu();
   revealPageElements(pageId);
 }
 
@@ -1686,7 +1688,33 @@ function openCertModal(cert) {
 // ═══════════════════════════════════════════
 function toggleMenu() {
   const nl = document.getElementById("navLinks");
+  const hb = document.querySelector(".hamburger");
+  const isOpen = nl && nl.classList.contains("open");
+
   if (nl) nl.classList.toggle("open");
+  if (hb) hb.classList.toggle("open");
+
+  var overlay = document.getElementById("navOverlay");
+  if (!isOpen) {
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "navOverlay";
+      overlay.className = "nav-overlay open";
+      overlay.onclick = function () { toggleMenu(); };
+      document.body.appendChild(overlay);
+    }
+  } else {
+    if (overlay) overlay.remove();
+  }
+}
+
+function closeMenu() {
+  const nl = document.getElementById("navLinks");
+  const hb = document.querySelector(".hamburger");
+  if (nl) nl.classList.remove("open");
+  if (hb) hb.classList.remove("open");
+  var overlay = document.getElementById("navOverlay");
+  if (overlay) overlay.remove();
 }
 
 // ═══════════════════════════════════════════
