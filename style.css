@@ -123,6 +123,8 @@ body {
   background: var(--blue-light);
 }
 
+.nav-icon { display: none; }
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -1808,8 +1810,9 @@ a.c-detail-value:hover { text-decoration: underline; }
     background: transparent !important;
     gap: 12px;
   }
-  .nav-link::before { display: none; }
+  .nav-link::before { display: none !important; }
   .nav-icon {
+    display: flex;
     width: 34px;
     height: 34px;
     display: flex;
