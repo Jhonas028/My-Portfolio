@@ -616,6 +616,15 @@ function renderProjectPage() {
                   <span class="text-blue-400 text-sm">✉</span>
                   <span class="text-xs text-gray-400">${data.meta.email}</span>
                 </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener noreferrer"
+                  style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;
+                         background:#1e56e8;color:#fff;font-size:0.75rem;font-weight:600;
+                         text-decoration:none;border:1px solid #1e56e8;transition:background .2s;"
+                  onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Live Demo
+                </a>` : ""}
                 ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer"
                   style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;
                          background:#f3f4f6;color:#374151;font-size:0.75rem;font-weight:600;
@@ -624,6 +633,7 @@ function renderProjectPage() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#374151"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                   View on GitHub
                 </a>` : ""}
+                </div>
               </div>
             </div>
 
@@ -660,7 +670,7 @@ function renderProjectPage() {
             : "";
           return `
         <div class="other-proj-card" style="position:relative;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer;transition:border-color .2s,box-shadow .2s;"
-          onclick="openOtherProjectModal('${item.name.replace(/'/g, "\\'")}')"
+          onclick="${item.imgs && item.imgs.length ? `openOtherProjectModal('${item.name.replace(/'/g, "\\'")}')` : item.live ? `window.open('${item.live}','_blank','noopener,noreferrer')` : ''}"
           onmouseenter="this.style.borderColor='#bfdbfe';this.style.boxShadow='0 4px 16px rgba(30,86,232,0.10)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
           onmouseleave="this.style.borderColor='#f3f4f6';this.style.boxShadow='0 1px 4px rgba(0,0,0,0.04)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
           ${preview}
@@ -669,6 +679,15 @@ function renderProjectPage() {
             <p class="text-sm font-semibold text-gray-800 truncate">${item.name}</p>
             <p class="text-xs text-gray-400">${item.tech}</p>
           </div>
+          ${item.live ? `<a href="${item.live}" target="_blank" rel="noopener noreferrer"
+            onclick="event.stopPropagation()"
+            title="Live Demo"
+            style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;
+                   border-radius:6px;background:#1e56e8;border:1px solid #1e56e8;flex-shrink:0;
+                   transition:background .2s;text-decoration:none;"
+            onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>` : ""}
           ${item.github ? `<a href="${item.github}" target="_blank" rel="noopener noreferrer"
             onclick="event.stopPropagation()"
             title="View on GitHub"

@@ -169,7 +169,8 @@
       "imgs": ["img/project%20images/Centrasuite/centra1.png"],
       "thumb_type": "screen",
       "color": "#1e56e8",
-      "github": "https://github.com/Jhonas028/centrasuite"
+      "github": "https://github.com/Jhonas028/centrasuite",
+      "live": "https://centrasuite.infinityfreeapp.com/developer/dashboard"
     },
     {
       "id": "essay",
@@ -229,6 +230,15 @@
         { "name": "CVD Awareness", "tech": "WordPress", "github": "https://github.com/Jhonas028/CVD-SOTERO", "imgs": ["img/project%20images/CVD/cvd1.png", "img/project%20images/CVD/cvd2.png", "img/project%20images/CVD/cvd3.png"] },
         { "name": "Cosmos", "tech": "WordPress", "github": "https://github.com/Jhonas028/COSMOS-SOTERO", "imgs": ["img/project%20images/cosmos/cosmos1.png", "img/project%20images/cosmos/cosmos2.png", "img/project%20images/cosmos/cosmos3.png", "img/project%20images/cosmos/cosmos4.png"] },
         { "name": "Beyond Borders", "tech": "WordPress", "github": "https://github.com/Jhonas028/BEYOND-BORDERS---SOTERO", "imgs": ["img/project%20images/BeyondBorder/beyond1.png", "img/project%20images/BeyondBorder/beyond2.png", "img/project%20images/BeyondBorder/beyond3.png", "img/project%20images/BeyondBorder/beyond4.png"] }
+      ]
+    },
+    {
+      "category": "WordPress + Elementor",
+      "icon": "⚡",
+      "items": [
+        { "name": "Pink Pouch", "tech": "WordPress, Elementor, WooCommerce", "live": "https://pinkpouch.shop/", "imgs": [] },
+        { "name": "Iron Forge Gym", "tech": "WordPress, Elementor", "live": "https://ironforgegym.free.nf/", "imgs": [] },
+        { "name": "GP Concrete Coatings", "tech": "WordPress, Elementor", "live": "https://gp-concrete-coatings.vercel.app/", "imgs": [] }
       ]
     }
   ],
