@@ -36,7 +36,7 @@ function renderAll() {
   renderContactPage();
   renderDynamicPage();
   renderFooter();
-  showPage("home");
+  showPage("home", { scroll: false });
   initAnimations();
 }
 
@@ -136,9 +136,7 @@ function renderHomePage() {
     </section>
   `;
 
-  const ctaHTML = ctaBannerHTML();
-
-  el.innerHTML = heroHTML + skillsHTML + projHTML + ctaHTML;
+  el.innerHTML = heroHTML + skillsHTML + projHTML;
 
   renderSkillCards();
   renderHomeProjects();
@@ -221,10 +219,10 @@ function thumbHTML(p, size) {
       const arrows =
         imgs.length > 1
           ? `
-        <button onclick="event.stopPropagation();prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">‹</button>
-        <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);color:#1e56e8;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.15);">›</button>`
+        <button onclick="event.stopPropagation();prevSlide('${p.id}')" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(10,14,20,0.85);color:#4ade80;border:1px solid rgba(74,222,128,0.3);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.3);">‹</button>
+        <button onclick="event.stopPropagation();nextSlide('${p.id}')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(10,14,20,0.85);color:#4ade80;border:1px solid rgba(74,222,128,0.3);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,0.3);">›</button>`
           : "";
-      return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,86,232,0.10);background:#ffffff;">
+      return `<div id="carousel-${p.id}" data-current="0" style="position:relative;width:100%;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3);background:#131820;">
         ${slides}${counter}${arrows}${dots}
       </div>`;
     }
@@ -326,7 +324,7 @@ function openLightbox(projectId, startIndex) {
     "position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:lbFade .2s ease;";
   lb.innerHTML = `
     <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:42px;height:42px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">✕</button>
-    <div id="lb-counter" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:0.78rem;font-family:Poppins,sans-serif;letter-spacing:.05em;">${startIndex + 1} / ${imgs.length}</div>
+    <div id="lb-counter" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:0.78rem;font-family:var(--font);letter-spacing:.05em;">${startIndex + 1} / ${imgs.length}</div>
     ${imgs.length > 1 ? `<button onclick="lbPrev()" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">‹</button>` : ""}
     ${imgs.length > 1 ? `<button onclick="lbNext()" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">›</button>` : ""}
     <img id="lb-img" src="${imgs[startIndex]}" style="max-width:88vw;max-height:72vh;object-fit:contain;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,0.6);" />
@@ -453,15 +451,13 @@ function renderAboutPage() {
         <div class="card-grid" id="certGrid"></div>
       </div>
     </section>
-
-    ${ctaBannerHTML()}
   `;
 
   // socials — SVG icons
   const socialSVGs = {
     gmail: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.09l8.073-5.6C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/></svg>`,
     linkedin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2"/></svg>`,
-    github: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#181717"/></svg>`,
+    github: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#e6edf3"/></svg>`,
   };
   const socDiv = document.getElementById("aboutSocials");
   data.meta.socials.forEach(function (s) {
@@ -585,8 +581,8 @@ function renderProjectPage() {
     .map(function (p, i) {
       const active =
         i === 0
-          ? "bg-blue-600 border-blue-600 text-white shadow-sm"
-          : "bg-white border-gray-200 text-gray-500 hover:border-blue-400 hover:text-blue-600";
+          ? "bg-[#4ade80] border-[#4ade80] text-[#0a0e14] shadow-sm"
+          : "bg-[#131820] border-[#232a34] text-[#8b949e] hover:border-[#4ade80] hover:text-[#4ade80]";
       return `<button class="proj-tab px-5 py-2 rounded-full text-sm font-semibold border-2 cursor-pointer transition-all duration-200 ${active}"
         data-id="${p.id}" onclick="switchProject('${p.id}')">${p.title}</button>`;
     })
@@ -596,41 +592,41 @@ function renderProjectPage() {
     .map(function (p, i) {
       return `
       <div class="proj-detail ${i === 0 ? "flex" : "hidden"} flex-col" id="detail-${p.id}">
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden">
+        <div class="bg-[#131820] rounded-2xl border border-[#232a34] shadow-md overflow-hidden">
           <div class="flex flex-col lg:flex-row">
 
             <!-- Left: Info -->
             <div class="flex-1 p-8 flex flex-col justify-between min-w-0">
               <div>
                 <div class="flex items-center gap-3 mb-5">
-                  <span class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full tracking-wider uppercase">${p.type}</span>
-                  <span class="text-xs font-bold text-gray-300">#${String(i + 1).padStart(2, "0")}</span>
+                  <span class="text-xs font-bold text-[#4ade80] bg-[#10241a] border border-[#1f3d2c] px-3 py-1 rounded-full tracking-wider uppercase">${p.type}</span>
+                  <span class="text-xs font-bold text-[#3a4450]">#${String(i + 1).padStart(2, "0")}</span>
                 </div>
-                <h1 class="text-[clamp(1.4rem,3vw,2rem)] font-extrabold text-gray-900 tracking-tight leading-tight mb-3">${p.title}</h1>
-                <div class="w-10 h-1 bg-blue-600 rounded-full mb-5"></div>
-                <p class="text-sm text-gray-500 leading-relaxed mb-3">${p.desc}</p>
-                <p class="text-sm text-gray-400 leading-relaxed">${p.detail}</p>
+                <h1 class="text-[clamp(1.4rem,3vw,2rem)] font-extrabold text-[#e6edf3] tracking-tight leading-tight mb-3">${p.title}</h1>
+                <div class="w-10 h-1 bg-[#4ade80] rounded-full mb-5"></div>
+                <p class="text-sm text-[#8b949e] leading-relaxed mb-3">${p.desc}</p>
+                <p class="text-sm text-[#64707b] leading-relaxed">${p.detail}</p>
               </div>
-              <div class="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between gap-2 flex-wrap">
+              <div class="mt-8 pt-5 border-t border-[#232a34] flex items-center justify-between gap-2 flex-wrap">
                 <div class="flex items-center gap-2">
-                  <span class="text-blue-400 text-sm">✉</span>
-                  <span class="text-xs text-gray-400">${data.meta.email}</span>
+                  <span class="text-[#4ade80] text-sm">✉</span>
+                  <span class="text-xs text-[#64707b]">${data.meta.email}</span>
                 </div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener noreferrer"
                   style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;
-                         background:#1e56e8;color:#fff;font-size:0.75rem;font-weight:600;
-                         text-decoration:none;border:1px solid #1e56e8;transition:background .2s;"
-                  onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                         background:#4ade80;color:#0a0e14;font-size:0.75rem;font-weight:600;
+                         text-decoration:none;border:1px solid #4ade80;transition:background .2s;"
+                  onmouseover="this.style.background='#22c55e'" onmouseout="this.style.background='#4ade80'">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0a0e14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                   Live Demo
                 </a>` : ""}
                 ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener noreferrer"
                   style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;
-                         background:#f3f4f6;color:#374151;font-size:0.75rem;font-weight:600;
-                         text-decoration:none;border:1px solid #e5e7eb;transition:background .2s;"
-                  onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#374151"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                         background:#1a2029;color:#c9d1d9;font-size:0.75rem;font-weight:600;
+                         text-decoration:none;border:1px solid #232a34;transition:background .2s;"
+                  onmouseover="this.style.background='#232a34'" onmouseout="this.style.background='#1a2029'">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#c9d1d9"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                   View on GitHub
                 </a>` : ""}
                 </div>
@@ -638,7 +634,7 @@ function renderProjectPage() {
             </div>
 
             <!-- Right: Image / Carousel -->
-            <div class="flex-shrink-0 lg:w-[420px] bg-gradient-to-br from-slate-50 to-blue-50 border-t lg:border-t-0 lg:border-l border-gray-100 flex items-center justify-center p-6">
+            <div class="flex-shrink-0 lg:w-[420px] bg-gradient-to-br from-[#0d1117] to-[#10241a] border-t lg:border-t-0 lg:border-l border-[#232a34] flex items-center justify-center p-6">
               ${thumbHTML(p, "lg")}
             </div>
 
@@ -657,53 +653,53 @@ function renderProjectPage() {
             item.imgs && item.imgs.length ? item.imgs[0] : item.img || null;
           const imgCount = item.imgs ? item.imgs.length : item.img ? 1 : 0;
           const preview = thumbSrc
-            ? `<div class="other-proj-preview" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:210px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.16);border:1px solid #e5e7eb;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;">
+            ? `<div class="other-proj-preview" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:210px;background:#131820;border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.4);border:1px solid #232a34;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;">
               <img src="${thumbSrc}" style="width:100%;height:120px;object-fit:cover;" />
               <div style="padding:10px 12px;display:flex;align-items:center;justify-content:space-between;">
                 <div>
-                  <p style="font-size:0.75rem;font-weight:600;color:#111827;margin:0;">${item.name}</p>
-                  <p style="font-size:0.68rem;color:#9ca3af;margin:0;">${item.tech}</p>
+                  <p style="font-size:0.75rem;font-weight:600;color:#e6edf3;margin:0;">${item.name}</p>
+                  <p style="font-size:0.68rem;color:#64707b;margin:0;">${item.tech}</p>
                 </div>
-                ${imgCount > 1 ? `<span style="font-size:0.63rem;font-weight:700;color:#1e56e8;background:#eff6ff;border:1px solid #bfdbfe;padding:2px 7px;border-radius:20px;white-space:nowrap;">${imgCount} photos</span>` : ""}
+                ${imgCount > 1 ? `<span style="font-size:0.63rem;font-weight:700;color:#4ade80;background:#10241a;border:1px solid #1f3d2c;padding:2px 7px;border-radius:20px;white-space:nowrap;">${imgCount} photos</span>` : ""}
               </div>
             </div>`
             : "";
           return `
-        <div class="other-proj-card" style="position:relative;background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer;transition:border-color .2s,box-shadow .2s;"
+        <div class="other-proj-card" style="position:relative;background:#131820;border:1px solid #232a34;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.2);cursor:pointer;transition:border-color .2s,box-shadow .2s;"
           onclick="${item.imgs && item.imgs.length ? `openOtherProjectModal('${item.name.replace(/'/g, "\\'")}')` : item.live ? `window.open('${item.live}','_blank','noopener,noreferrer')` : ''}"
-          onmouseenter="this.style.borderColor='#bfdbfe';this.style.boxShadow='0 4px 16px rgba(30,86,232,0.10)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
-          onmouseleave="this.style.borderColor='#f3f4f6';this.style.boxShadow='0 1px 4px rgba(0,0,0,0.04)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
+          onmouseenter="this.style.borderColor='#1f3d2c';this.style.boxShadow='0 4px 16px rgba(74,222,128,0.14)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='1')"
+          onmouseleave="this.style.borderColor='#232a34';this.style.boxShadow='0 1px 4px rgba(0,0,0,0.2)';this.querySelector('.other-proj-preview') && (this.querySelector('.other-proj-preview').style.opacity='0')">
           ${preview}
-          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-base flex-shrink-0">${group.icon}</div>
+          <div class="w-8 h-8 rounded-lg bg-[#10241a] flex items-center justify-center text-base flex-shrink-0">${group.icon}</div>
           <div class="min-w-0 flex-1">
-            <p class="text-sm font-semibold text-gray-800 truncate">${item.name}</p>
-            <p class="text-xs text-gray-400">${item.tech}</p>
+            <p class="text-sm font-semibold text-[#e6edf3] truncate">${item.name}</p>
+            <p class="text-xs text-[#64707b]">${item.tech}</p>
           </div>
           ${item.live ? `<a href="${item.live}" target="_blank" rel="noopener noreferrer"
             onclick="event.stopPropagation()"
             title="Live Demo"
             style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;
-                   border-radius:6px;background:#1e56e8;border:1px solid #1e56e8;flex-shrink:0;
+                   border-radius:6px;background:#4ade80;border:1px solid #4ade80;flex-shrink:0;
                    transition:background .2s;text-decoration:none;"
-            onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            onmouseover="this.style.background='#22c55e'" onmouseout="this.style.background='#4ade80'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0a0e14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>` : ""}
           ${item.github ? `<a href="${item.github}" target="_blank" rel="noopener noreferrer"
             onclick="event.stopPropagation()"
             title="View on GitHub"
             style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;
-                   border-radius:6px;background:#f3f4f6;border:1px solid #e5e7eb;flex-shrink:0;
+                   border-radius:6px;background:#1a2029;border:1px solid #232a34;flex-shrink:0;
                    transition:background .2s;text-decoration:none;"
-            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#374151"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            onmouseover="this.style.background='#232a34'" onmouseout="this.style.background='#1a2029'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#c9d1d9"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           </a>` : ""}
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4b5563" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </div>`;
         })
         .join("");
       return `
       <div class="mb-6">
-        <h4 class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">${group.category}</h4>
+        <h4 class="text-xs font-bold text-[#64707b] tracking-widest uppercase mb-3">${group.category}</h4>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${cards}</div>
       </div>`;
     })
@@ -712,8 +708,8 @@ function renderProjectPage() {
   el.innerHTML = `
     <div class="max-w-[900px] w-full mx-auto px-6 py-12">
       <div class="mb-2">
-        <p class="text-xs font-bold text-blue-500 tracking-widest uppercase mb-1">Portfolio</p>
-        <h2 class="text-2xl font-extrabold text-gray-900 mb-7">My Projects</h2>
+        <p class="text-xs font-bold text-[#4ade80] tracking-widest uppercase mb-1">// Portfolio</p>
+        <h2 class="text-2xl font-extrabold text-[#e6edf3] mb-7">My Projects</h2>
       </div>
       <div class="flex gap-2.5 flex-wrap mb-8">
         ${tabsHTML}
@@ -723,15 +719,15 @@ function renderProjectPage() {
       <!-- Other Projects -->
       <div class="mt-12">
         <div class="flex items-center gap-3 mb-4">
-          <div class="flex-1 h-px bg-gray-100"></div>
-          <p class="text-xs font-bold text-gray-400 tracking-widest uppercase">Other Projects</p>
-          <div class="flex-1 h-px bg-gray-100"></div>
+          <div class="flex-1 h-px bg-[#232a34]"></div>
+          <p class="text-xs font-bold text-[#64707b] tracking-widest uppercase">Other Projects</p>
+          <div class="flex-1 h-px bg-[#232a34]"></div>
         </div>
-        <div style="display:flex;align-items:flex-start;gap:10px;background:#f8faff;border:1px solid #e0eaff;border-radius:10px;padding:11px 15px;margin-bottom:20px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;background:#10241a;border:1px solid #1f3d2c;border-radius:10px;padding:11px 15px;margin-bottom:20px;">
           <span style="font-size:0.95rem;flex-shrink:0;margin-top:1px;">💡</span>
-          <p style="font-size:0.75rem;color:#6b7280;margin:0;line-height:1.6;font-family:Poppins,sans-serif;">
-            These projects were built using <strong style="color:#374151;">React, Tailwind CSS, Android Java, and WordPress</strong> to showcase my skills in
-            <strong style="color:#374151;">frontend, mobile, and CMS development</strong>. Click any card to view screenshots.
+          <p style="font-size:0.75rem;color:#8b949e;margin:0;line-height:1.6;font-family:var(--font);">
+            These projects were built using <strong style="color:#c9d1d9;">React, Tailwind CSS, Android Java, and WordPress</strong> to showcase my skills in
+            <strong style="color:#c9d1d9;">frontend, mobile, and CMS development</strong>. Click any card to view screenshots.
           </p>
         </div>
         ${otherHTML}
@@ -872,12 +868,12 @@ function switchProject(id) {
   });
   document.querySelectorAll(".proj-tab").forEach(function (t) {
     t.classList.remove(
-      "bg-blue-600",
-      "border-blue-600",
-      "text-white",
+      "bg-[#4ade80]",
+      "border-[#4ade80]",
+      "text-[#0a0e14]",
       "shadow-sm",
     );
-    t.classList.add("bg-white", "border-gray-200", "text-gray-500");
+    t.classList.add("bg-[#131820]", "border-[#232a34]", "text-[#8b949e]");
   });
   const panel = document.getElementById("detail-" + id);
   if (panel) {
@@ -886,11 +882,11 @@ function switchProject(id) {
   }
   const tab = document.querySelector(`.proj-tab[data-id="${id}"]`);
   if (tab) {
-    tab.classList.remove("bg-white", "border-gray-200", "text-gray-500");
+    tab.classList.remove("bg-[#131820]", "border-[#232a34]", "text-[#8b949e]");
     tab.classList.add(
-      "bg-blue-600",
-      "border-blue-600",
-      "text-white",
+      "bg-[#4ade80]",
+      "border-[#4ade80]",
+      "text-[#0a0e14]",
       "shadow-sm",
     );
   }
@@ -1017,7 +1013,7 @@ function submitContact() {
   }).catch(function () {
     btn.textContent = "Send Message →";
     btn.disabled = false;
-    showContactNotif("error", "Something went wrong. Please email me directly at <strong style='color:#1e56e8;'>" + data.contact.email + "</strong>.");
+    showContactNotif("error", "Something went wrong. Please email me directly at <strong style='color:#4ade80;'>" + data.contact.email + "</strong>.");
   });
 }
 
@@ -1032,37 +1028,37 @@ function showContactNotif(type, payload) {
   modal.style.cssText = "position:fixed;inset:0;background:rgba(8,12,30,0.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;";
 
   modal.innerHTML = `
-    <div style="background:#fff;border-radius:20px;width:100%;max-width:380px;padding:2.5rem 2rem 2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.22);font-family:Poppins,sans-serif;">
+    <div style="background:#131820;border:1px solid #232a34;border-radius:20px;width:100%;max-width:380px;padding:2.5rem 2rem 2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.5);font-family:var(--font);">
 
       <!-- Icon -->
       <div style="width:66px;height:66px;border-radius:50%;
-                  background:${isSuccess ? "#ecfdf5" : "#fef2f2"};
-                  border:2px solid ${isSuccess ? "#bbf7d0" : "#fecaca"};
+                  background:${isSuccess ? "#10241a" : "#2a0e0e"};
+                  border:2px solid ${isSuccess ? "#1f3d2c" : "#5c1f1f"};
                   display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
         ${isSuccess
-          ? `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
-          : `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+          ? `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+          : `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
         }
       </div>
 
       <!-- Title -->
-      <h3 style="font-size:1.05rem;font-weight:700;color:#111827;margin:0 0 0.5rem;">
+      <h3 style="font-size:1.05rem;font-weight:700;color:#e6edf3;margin:0 0 0.5rem;">
         ${isSuccess ? "Message Sent!" : "Oops!"}
       </h3>
 
       <!-- Body -->
-      <p style="font-size:0.83rem;color:#6b7280;margin:0 0 1.75rem;line-height:1.7;">
+      <p style="font-size:0.83rem;color:#8b949e;margin:0 0 1.75rem;line-height:1.7;">
         ${isSuccess
-          ? `Thanks <strong style="color:#111827;">${payload}</strong>! Your message has been received. I'll get back to you soon.`
+          ? `Thanks <strong style="color:#e6edf3;">${payload}</strong>! Your message has been received. I'll get back to you soon.`
           : payload}
       </p>
 
       <!-- Button -->
       <button onclick="document.getElementById('contactNotif').remove()"
-        style="width:100%;padding:0.72rem;border-radius:10px;background:#1e56e8;color:#fff;border:none;
-               font-family:Poppins,sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;
-               transition:background .2s;box-shadow:0 4px 14px rgba(30,86,232,0.25);"
-        onmouseover="this.style.background='#1240c0'" onmouseout="this.style.background='#1e56e8'">
+        style="width:100%;padding:0.72rem;border-radius:10px;background:#4ade80;color:#0a0e14;border:none;
+               font-family:var(--font);font-size:0.875rem;font-weight:600;cursor:pointer;
+               transition:background .2s;box-shadow:0 4px 14px rgba(74,222,128,0.25);"
+        onmouseover="this.style.background='#22c55e'" onmouseout="this.style.background='#4ade80'">
         Got it
       </button>
     </div>
@@ -1098,15 +1094,12 @@ function renderFooter() {
 // ═══════════════════════════════════════════
 // PAGE NAVIGATION
 // ═══════════════════════════════════════════
-function showPage(pageId) {
-  document.querySelectorAll(".page").forEach(function (p) {
-    p.classList.remove("active");
-  });
+function showPage(pageId, opts) {
+  var scroll = !opts || opts.scroll !== false;
 
   const target = document.getElementById("page-" + pageId);
-  if (target) {
-    target.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  if (target && scroll) {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   document.querySelectorAll(".nav-link").forEach(function (link) {
@@ -1476,7 +1469,7 @@ function openOtherProjectModal(name) {
     .map(function (src, i) {
       return `<img src="${src}" class="opm-thumb" onclick="opmGoTo(${i})"
       style="width:60px;height:42px;object-fit:cover;border-radius:7px;cursor:pointer;
-             border:2px solid ${i === 0 ? "#1e56e8" : "transparent"};
+             border:2px solid ${i === 0 ? "#4ade80" : "transparent"};
              opacity:${i === 0 ? "1" : "0.5"};transition:all .2s;flex-shrink:0;" />`;
     })
     .join("");
@@ -1484,43 +1477,43 @@ function openOtherProjectModal(name) {
   var modal = document.createElement("div");
   modal.id = "otherProjModal";
   modal.style.cssText =
-    "position:fixed;inset:0;background:rgba(8,12,30,0.78);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
+    "position:fixed;inset:0;background:rgba(3,5,8,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
 
   modal.innerHTML = `
-    <div style="background:#fff;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
-                box-shadow:0 32px 80px rgba(0,0,0,0.35);display:flex;flex-direction:column;max-height:90vh;">
+    <div style="background:#131820;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
+                box-shadow:0 32px 80px rgba(0,0,0,0.6);display:flex;flex-direction:column;max-height:90vh;">
 
       <!-- Header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #f3f4f6;flex-shrink:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #232a34;flex-shrink:0;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:38px;height:38px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;
+          <div style="width:38px;height:38px;border-radius:10px;background:#10241a;border:1px solid #1f3d2c;
                       display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🖥️</div>
           <div>
-            <h3 style="font-size:1rem;font-weight:700;color:#111827;margin:0 0 3px;font-family:Poppins,sans-serif;">${item.name}</h3>
-            <span style="font-size:0.68rem;font-weight:600;color:#1e56e8;background:#eff6ff;
-                         border:1px solid #bfdbfe;padding:2px 9px;border-radius:20px;font-family:Poppins,sans-serif;">${item.tech}</span>
+            <h3 style="font-size:1rem;font-weight:700;color:#e6edf3;margin:0 0 3px;font-family:var(--font);">${item.name}</h3>
+            <span style="font-size:0.68rem;font-weight:600;color:#4ade80;background:#10241a;
+                         border:1px solid #1f3d2c;padding:2px 9px;border-radius:20px;font-family:var(--font);">${item.tech}</span>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:0.7rem;color:#9ca3af;font-family:Poppins,sans-serif;">${_opm.imgs.length} image${_opm.imgs.length > 1 ? "s" : ""}</span>
+          <span style="font-size:0.7rem;color:#64707b;font-family:var(--font);">${_opm.imgs.length} image${_opm.imgs.length > 1 ? "s" : ""}</span>
           ${item.github ? `<a href="${item.github}" target="_blank" rel="noopener noreferrer"
             style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;
-                   background:#f3f4f6;color:#374151;font-size:0.72rem;font-weight:600;
-                   text-decoration:none;border:1px solid #e5e7eb;transition:background .2s;white-space:nowrap;"
-            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="#374151"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                   background:#1a2029;color:#c9d1d9;font-size:0.72rem;font-weight:600;
+                   text-decoration:none;border:1px solid #232a34;transition:background .2s;white-space:nowrap;"
+            onmouseover="this.style.background='#232a34'" onmouseout="this.style.background='#1a2029'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="#c9d1d9"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             GitHub
           </a>` : ""}
           <button onclick="closeOtherProjModal()"
-            style="background:#f3f4f6;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
-                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#6b7280;
+            style="background:#1a2029;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
+                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#8b949e;
                    transition:background .2s;flex-shrink:0;"
-            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">✕</button>
+            onmouseover="this.style.background='#232a34'" onmouseout="this.style.background='#1a2029'">✕</button>
         </div>
       </div>
 
       <!-- Main Image -->
-      <div style="position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
+      <div style="position:relative;background:#05070a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
         <img id="opm-main-img" src="${_opm.imgs[0]}"
           style="max-width:100%;max-height:440px;object-fit:contain;display:block;" />
         ${
@@ -1529,20 +1522,20 @@ function openOtherProjectModal(name) {
           <div id="opm-counter"
             style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.55);color:#fff;
                    font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:20px;
-                   font-family:Poppins,sans-serif;letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
+                   font-family:var(--font);letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
           <button onclick="opmPrev()"
             style="position:absolute;left:14px;top:50%;transform:translateY(-50%);
-                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   background:rgba(255,255,255,0.92);color:#0a0e14;border:none;border-radius:50%;
                    width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
                    align-items:center;justify-content:center;transition:background .2s;
-                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+                   box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:4;"
             onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">‹</button>
           <button onclick="opmNext()"
             style="position:absolute;right:14px;top:50%;transform:translateY(-50%);
-                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   background:rgba(255,255,255,0.92);color:#0a0e14;border:none;border-radius:50%;
                    width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
                    align-items:center;justify-content:center;transition:background .2s;
-                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+                   box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:4;"
             onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">›</button>
         `
             : ""
@@ -1554,8 +1547,8 @@ function openOtherProjectModal(name) {
         _opm.imgs.length > 1
           ? `
         <div id="opm-thumbs"
-          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#f9fafb;
-                 border-top:1px solid #f3f4f6;flex-shrink:0;scrollbar-width:thin;">
+          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#0d1117;
+                 border-top:1px solid #232a34;flex-shrink:0;scrollbar-width:thin;">
           ${thumbsHTML}
         </div>
       `
@@ -1592,7 +1585,7 @@ function opmGoTo(index) {
   if (counter) counter.textContent = index + 1 + " / " + _opm.imgs.length;
   modal.querySelectorAll(".opm-thumb").forEach(function (t, i) {
     t.style.border =
-      i === index ? "2px solid #1e56e8" : "2px solid transparent";
+      i === index ? "2px solid #4ade80" : "2px solid transparent";
     t.style.opacity = i === index ? "1" : "0.5";
   });
 }
@@ -1617,69 +1610,69 @@ function openCertModal(cert) {
   var thumbsHTML = _opm.imgs.map(function (src, i) {
     return `<img src="${src}" class="opm-thumb" onclick="opmGoTo(${i})"
       style="width:60px;height:42px;object-fit:cover;border-radius:7px;cursor:pointer;
-             border:2px solid ${i === 0 ? "#1e56e8" : "transparent"};
+             border:2px solid ${i === 0 ? "#4ade80" : "transparent"};
              opacity:${i === 0 ? "1" : "0.5"};transition:all .2s;flex-shrink:0;" />`;
   }).join("");
 
   var modal = document.createElement("div");
   modal.id = "otherProjModal";
   modal.style.cssText =
-    "position:fixed;inset:0;background:rgba(8,12,30,0.78);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
+    "position:fixed;inset:0;background:rgba(3,5,8,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:lbFade .2s ease;backdrop-filter:blur(3px);";
 
   modal.innerHTML = `
-    <div style="background:#fff;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
-                box-shadow:0 32px 80px rgba(0,0,0,0.35);display:flex;flex-direction:column;max-height:90vh;">
+    <div style="background:#131820;border-radius:20px;width:100%;max-width:780px;overflow:hidden;
+                box-shadow:0 32px 80px rgba(0,0,0,0.6);display:flex;flex-direction:column;max-height:90vh;">
 
       <!-- Header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #f3f4f6;flex-shrink:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #232a34;flex-shrink:0;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:38px;height:38px;border-radius:10px;background:#fefce8;border:1px solid #fde68a;
+          <div style="width:38px;height:38px;border-radius:10px;background:#2b2008;border:1px solid #4a3a12;
                       display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🏆</div>
           <div>
-            <h3 style="font-size:0.95rem;font-weight:700;color:#111827;margin:0 0 3px;font-family:Poppins,sans-serif;">${cert.desc}</h3>
-            <span style="font-size:0.68rem;font-weight:600;color:#d97706;background:#fefce8;
-                         border:1px solid #fde68a;padding:2px 9px;border-radius:20px;font-family:Poppins,sans-serif;">Award</span>
+            <h3 style="font-size:0.95rem;font-weight:700;color:#e6edf3;margin:0 0 3px;font-family:var(--font);">${cert.desc}</h3>
+            <span style="font-size:0.68rem;font-weight:600;color:#fbbf24;background:#2b2008;
+                         border:1px solid #4a3a12;padding:2px 9px;border-radius:20px;font-family:var(--font);">Award</span>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:0.7rem;color:#9ca3af;font-family:Poppins,sans-serif;">${_opm.imgs.length} photo${_opm.imgs.length > 1 ? "s" : ""}</span>
+          <span style="font-size:0.7rem;color:#64707b;font-family:var(--font);">${_opm.imgs.length} photo${_opm.imgs.length > 1 ? "s" : ""}</span>
           ${cert.url ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer"
             style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;
-                   background:#eff6ff;color:#1e56e8;font-size:0.72rem;font-weight:600;
-                   text-decoration:none;border:1px solid #bfdbfe;transition:background .2s;white-space:nowrap;"
-            onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+                   background:#10241a;color:#4ade80;font-size:0.72rem;font-weight:600;
+                   text-decoration:none;border:1px solid #1f3d2c;transition:background .2s;white-space:nowrap;"
+            onmouseover="this.style.background='#1f3d2c'" onmouseout="this.style.background='#10241a'">
             View Proof ↗
           </a>` : ""}
           <button onclick="closeOtherProjModal()"
-            style="background:#f3f4f6;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
-                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#6b7280;
+            style="background:#1a2029;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;
+                   font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:#8b949e;
                    transition:background .2s;flex-shrink:0;"
-            onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">✕</button>
+            onmouseover="this.style.background='#232a34'" onmouseout="this.style.background='#1a2029'">✕</button>
         </div>
       </div>
 
       <!-- Main Image -->
-      <div style="position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
+      <div style="position:relative;background:#05070a;display:flex;align-items:center;justify-content:center;min-height:320px;flex:1;overflow:hidden;">
         <img id="opm-main-img" src="${_opm.imgs[0]}"
           style="max-width:100%;max-height:460px;object-fit:contain;display:block;" />
         ${_opm.imgs.length > 1 ? `
           <div id="opm-counter"
             style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.55);color:#fff;
                    font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:20px;
-                   font-family:Poppins,sans-serif;letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
+                   font-family:var(--font);letter-spacing:.04em;">1 / ${_opm.imgs.length}</div>
           <button onclick="opmPrev()"
             style="position:absolute;left:14px;top:50%;transform:translateY(-50%);
-                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   background:rgba(255,255,255,0.92);color:#0a0e14;border:none;border-radius:50%;
                    width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
                    align-items:center;justify-content:center;transition:background .2s;
-                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+                   box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:4;"
             onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">‹</button>
           <button onclick="opmNext()"
             style="position:absolute;right:14px;top:50%;transform:translateY(-50%);
-                   background:rgba(255,255,255,0.92);color:#1e56e8;border:none;border-radius:50%;
+                   background:rgba(255,255,255,0.92);color:#0a0e14;border:none;border-radius:50%;
                    width:40px;height:40px;cursor:pointer;font-size:1.4rem;display:flex;
                    align-items:center;justify-content:center;transition:background .2s;
-                   box-shadow:0 2px 12px rgba(0,0,0,0.25);z-index:4;"
+                   box-shadow:0 2px 12px rgba(0,0,0,0.4);z-index:4;"
             onmouseover="this.style.background='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">›</button>
         ` : ""}
       </div>
@@ -1687,8 +1680,8 @@ function openCertModal(cert) {
       <!-- Thumbnail Strip -->
       ${_opm.imgs.length > 1 ? `
         <div id="opm-thumbs"
-          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#f9fafb;
-                 border-top:1px solid #f3f4f6;flex-shrink:0;scrollbar-width:thin;">
+          style="display:flex;gap:8px;padding:14px 22px;overflow-x:auto;background:#0d1117;
+                 border-top:1px solid #232a34;flex-shrink:0;scrollbar-width:thin;">
           ${thumbsHTML}
         </div>
       ` : ""}
@@ -1743,7 +1736,27 @@ function initAnimations() {
   addRevealAttributes();
   initScrollReveal();
   initNavbarScroll();
+  initScrollSpy();
   runTypewriter();
+}
+
+// ── Highlights the nav link for whichever section is in view ──
+function initScrollSpy() {
+  var sections = ["home", "about", "project", "contact"]
+    .map(function (id) { return document.getElementById("page-" + id); })
+    .filter(Boolean);
+
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var pageId = entry.target.id.replace("page-", "");
+      document.querySelectorAll(".nav-link").forEach(function (link) {
+        link.classList.toggle("active", link.dataset.page === pageId);
+      });
+    });
+  }, { threshold: 0, rootMargin: "-45% 0px -50% 0px" });
+
+  sections.forEach(function (s) { spy.observe(s); });
 }
 
 function addRevealAttributes() {
