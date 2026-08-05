@@ -13,7 +13,7 @@ let data = {};
 // ─────────────────────────────────────────
 // BOOTSTRAP — fetch JSON, render everything
 // ─────────────────────────────────────────
-fetch("jsonData.json")
+fetch("data/portfolio.json")
   .then(function (res) {
     return res.json();
   })
@@ -22,7 +22,7 @@ fetch("jsonData.json")
     renderAll();
   })
   .catch(function () {
-    alert("Could not load portfolio.json. Make sure it is in the same folder.");
+    alert("Could not load data/portfolio.json. Make sure it is in the same folder.");
   });
 
 // ─────────────────────────────────────────
@@ -45,7 +45,7 @@ function renderAll() {
 // ═══════════════════════════════════════════
 function renderNav() {
   const navLogo = document.getElementById("navLogo");
-  navLogo.innerHTML = `<img src="img/logos/jns-logo.png" alt="${data.meta.logo}" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" />`;
+  navLogo.innerHTML = `<img src="assets/img/logos/jns-logo.png" alt="${data.meta.logo}" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" />`;
   document.title = data.meta.title;
 
   const pages = ["home", "about", "project", "contact"];
