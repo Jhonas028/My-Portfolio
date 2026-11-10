@@ -21,6 +21,21 @@
     "cta_secondary": "Contact",
     "skills": [
       {
+        "icon": "🏗️",
+        "title": "Data Engineering",
+        "desc": "Certified Associate Data Engineer (DataCamp). Skilled in SQL joins, database design, and data warehousing concepts. Learned Snowflake SQL and how data moves from source to report."
+      },
+      {
+        "icon": "🛍️",
+        "title": "WordPress & Automation",
+        "desc": "Building WordPress sites with WooCommerce and Elementor. Using basic n8n to automate simple tasks and workflows."
+      },
+      {
+        "icon": "🤖",
+        "title": "AI & Problem Solving",
+        "desc": "Built SmartEssay, an Android system that uses OCR and NLP to score essays and give feedback. National Champion at Codefest 2025."
+      },
+      {
         "icon": "🌐",
         "title": "Full Stack Web Development",
         "desc": "Building modern web applications using React, Vite, PHP, Tailwind CSS, and REST APIs. Experienced in both frontend UI design and backend API development."
@@ -47,6 +62,29 @@
     ],
     "what_i_do_sub": "I build full-stack web and mobile applications, design REST APIs, and develop scalable enterprise solutions using modern technologies.",
     "tech_stack": [
+      { "label": "SQL", "img": "icons/sql.png" },
+      { "label": "Python", "img": "icons/python.png" },
+      { "label": "Snowflake", "img": "icons/snowflake.png" },
+      { "label": "MySQL", "class": "mysql", "img": "assets/img/tech/mysql.png" },
+      { "label": "SQL Server (T-SQL)", "img": "icons/T-sql.png" },
+      { "label": "Node.js", "img": "icons/nodejs.png" },
+      { "label": "Express.js", "img": "icons/nodejs.png" },
+      { "label": "MongoDB", "img": "icons/mongodb.png" },
+      { "label": "WordPress", "img": "icons/wordpress.png" },
+      { "label": "Vite", "mark": "V" },
+      { "label": "REST API", "img": "icons/api.png" },
+      { "label": "JWT", "mark": "JWT" },
+      { "label": "Git", "img": "icons/github.png" },
+      { "label": "n8n", "mark": "n8n" },
+      { "label": "Vertex AI", "img": "icons/ai.png" },
+      { "label": "Claude / ChatGPT", "img": "icons/claude.png" },
+      { "label": "Pandas", "img": "icons/python.png" },
+      { "label": "Cloud (GCP / AWS / Azure)", "mark": "☁" },
+      { "label": "Apache Airflow", "mark": "AF" },
+      { "label": "dbt", "mark": "dbt" },
+      { "label": "Docker", "mark": "DK" },
+      { "label": "Power BI", "img": "icons/power bi.png" },
+      { "label": "PySpark", "img": "icons/python.png" },
       { "label": "HTML", "class": "html5", "img": "assets/img/tech/html.png" },
       { "label": "CSS", "class": "css3", "img": "assets/img/tech/css.png" },
       { "label": "JavaScript", "class": "js", "img": "assets/img/tech/javascript.png" },
@@ -55,7 +93,6 @@
       { "label": "Tailwind", "class": "tailwind", "img": "assets/img/tech/tw.png" },
       { "label": "Firebase", "class": "firebase", "img": "assets/img/tech/firebase.png" },
       { "label": "Java", "class": "java", "img": "assets/img/tech/java.png" },
-      { "label": "MySQL", "class": "mysql", "img": "assets/img/tech/mysql.png" },
       { "label": "GitHub", "class": "github", "img": "assets/img/tech/github.png" }
     ],
     "experience": [

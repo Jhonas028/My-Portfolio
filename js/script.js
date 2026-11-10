@@ -542,9 +542,9 @@ function renderAboutPage() {
   const ts = document.getElementById("techStack");
   a.tech_stack.forEach(function (t) {
     const div = document.createElement("div");
-    div.className = "tech-card";
+    div.className = "tech-card" + (t.img ? "" : " tech-card-text");
     div.innerHTML = `
-    <img src="${t.img}" alt="${t.label}" />
+    ${t.img ? `<img src="${encodeURI(t.img)}" alt="${t.label}" />` : `<span class="tech-mark" aria-hidden="true">${t.mark}</span>`}
     <span>${t.label}</span>
   `;
     ts.appendChild(div);
@@ -613,6 +613,15 @@ function renderAboutPage() {
     if (c.imgs && c.imgs.length) {
       card.style.cursor = "pointer";
       card.onclick = function () { openCertModal(c); };
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", "View images for " + c.desc);
+      card.onkeydown = function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openCertModal(c);
+        }
+      };
     } else if (c.url) {
       card.style.cursor = "pointer";
       card.onclick = function () { window.open(c.url, "_blank", "noopener,noreferrer"); };
@@ -626,6 +635,13 @@ function renderAboutPage() {
       card.innerHTML = `<div class="cert-text-logo">${c.logo_text}</div><p>${c.desc}${badge}</p>`;
     } else {
       card.innerHTML = `<div class="cert-icon">${c.icon}</div><p>${c.desc}${badge}</p>`;
+    }
+    if (c.imgs && c.imgs.length) {
+      card.setAttribute("data-preview-title", c.desc);
+      card.addEventListener("mouseenter", function () { showCertificationPreview(card, c); });
+      card.addEventListener("focus", function () { showCertificationPreview(card, c); });
+      card.addEventListener("mouseleave", function () { hideCertificationPreview(card); });
+      card.addEventListener("blur", function () { hideCertificationPreview(card); });
     }
     cg.appendChild(card);
   });
@@ -676,6 +692,34 @@ function renderAboutPage() {
     `;
     dataCertGrid.appendChild(card);
   });
+}
+
+function showCertificationPreview(card, certificate) {
+  if (card.querySelector(".cert-preview")) return;
+
+  const preview = document.createElement("span");
+  preview.className = "cert-preview";
+  preview.setAttribute("aria-hidden", "true");
+  const title = document.createElement("span");
+  title.className = "cert-preview-title";
+  title.textContent = certificate.desc;
+  const image = document.createElement("img");
+  image.className = "cert-preview-image";
+  image.src = encodeURI(certificate.imgs[0]);
+  image.alt = "";
+  const footer = document.createElement("span");
+  footer.className = "cert-preview-footer";
+  footer.textContent = certificate.imgs.length > 1
+    ? certificate.imgs.length + " photos · Click to view all"
+    : "Click to view certificate";
+
+  preview.append(title, image, footer);
+  card.appendChild(preview);
+}
+
+function hideCertificationPreview(card) {
+  const preview = card.querySelector(".cert-preview");
+  if (preview) preview.remove();
 }
 
 function loadDataCertificatePreview(card, certificate) {
