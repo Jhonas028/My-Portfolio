@@ -228,6 +228,43 @@ function thumbHTML(p, size) {
     }
     return `<div class="${cls}"><img src="${imgs[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" /></div>`;
   }
+  if (p.thumb_type === "restaurant") {
+    if (size === "lg") {
+      return `<div class="${cls} restaurant-visual" role="img" aria-label="Restaurant ordering and management dashboard preview">
+        <div class="restaurant-topbar"><span class="restaurant-brand-mark">L</span><span class="restaurant-brand">LYNDA'S LECHON</span><span class="restaurant-status"><i></i> ONLINE</span></div>
+        <div class="restaurant-content">
+          <div class="restaurant-menu-preview">
+            <span class="restaurant-eyebrow">FRESH FROM THE KITCHEN</span>
+            <strong>Good food.<br />Made to share.</strong>
+            <span class="restaurant-order-button">EXPLORE MENU <b>→</b></span>
+          </div>
+          <div class="restaurant-food-art" aria-hidden="true"><span>🐷</span><i>✦</i></div>
+        </div>
+        <div class="restaurant-features"><span>▦ MENU</span><span>⌖ DELIVERY</span><span>▤ ORDERS</span><span>↗ ANALYTICS</span></div>
+      </div>`;
+    }
+    return `<div class="${cls} restaurant-thumb" role="img" aria-label="Lynda's Lechon restaurant ordering app"><span>🐷</span><i>LYNDA'S<br />LECHON</i></div>`;
+  }
+  if (p.thumb_type === "warehouse") {
+    if (size === "lg") {
+      return `<div class="${cls} warehouse-visual" role="img" aria-label="Medallion data warehouse architecture: Bronze, Silver, and Gold layers">
+        <div class="warehouse-visual-heading"><span class="warehouse-live-dot"></span> DATA PIPELINE <span>SQL SERVER</span></div>
+        <div class="warehouse-flow">
+          <div class="warehouse-layer bronze"><span class="warehouse-layer-icon">↓</span><strong>BRONZE</strong><small>RAW CSV DATA</small></div>
+          <span class="warehouse-flow-arrow">→</span>
+          <div class="warehouse-layer silver"><span class="warehouse-layer-icon">↻</span><strong>SILVER</strong><small>CLEAN &amp; STANDARDIZE</small></div>
+          <span class="warehouse-flow-arrow">→</span>
+          <div class="warehouse-layer gold"><span class="warehouse-layer-icon">✦</span><strong>GOLD</strong><small>STAR SCHEMA</small></div>
+        </div>
+        <div class="warehouse-visual-footer"><span>ERP + CRM</span><span>◆ ANALYTICS READY</span></div>
+      </div>`;
+    }
+    return `<div class="${cls} warehouse-thumb" role="img" aria-label="Bronze, Silver, and Gold data warehouse layers">
+      <span class="warehouse-thumb-bar bronze"></span>
+      <span class="warehouse-thumb-bar silver"></span>
+      <span class="warehouse-thumb-bar gold"></span>
+    </div>`;
+  }
   if (p.thumb_type === "screen") {
     if (size === "lg") {
       return `<div class="${cls} screen-v">
@@ -294,11 +331,7 @@ function nextSlide(id) {
 
 // ── Lightbox
 function openLightbox(projectId, startIndex) {
-  const p = data.projects.find(function (proj) {
-    return proj.id === projectId;
-  });
-  if (!p) return;
-  const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : [];
+  const imgs = getLightboxImages(projectId);
   if (imgs.length === 0) return;
 
   const existing = document.getElementById("lightbox");
@@ -338,6 +371,14 @@ function openLightbox(projectId, startIndex) {
   document.addEventListener("keydown", lbKeyHandler);
 }
 
+function getLightboxImages(sourceId) {
+  if (sourceId === "codefest") {
+    return data.about.codefest_gallery.map(function (item) { return encodeURI(item.image); });
+  }
+  const project = data.projects.find(function (item) { return item.id === sourceId; });
+  return project && project.imgs ? project.imgs : [];
+}
+
 function closeLightbox() {
   const lb = document.getElementById("lightbox");
   if (lb) lb.remove();
@@ -353,10 +394,7 @@ function lbKeyHandler(e) {
 function lbGoTo(index) {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) {
-    return proj.id === lb.dataset.projectId;
-  });
-  const imgs = p && p.imgs ? p.imgs : [];
+  const imgs = getLightboxImages(lb.dataset.projectId);
   lb.dataset.current = index;
   document.getElementById("lb-img").src = imgs[index];
   const counter = document.getElementById("lb-counter");
@@ -369,19 +407,13 @@ function lbGoTo(index) {
 function lbPrev() {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) {
-    return proj.id === lb.dataset.projectId;
-  });
-  const total = p && p.imgs ? p.imgs.length : 0;
+  const total = getLightboxImages(lb.dataset.projectId).length;
   lbGoTo((parseInt(lb.dataset.current) - 1 + total) % total);
 }
 function lbNext() {
   const lb = document.getElementById("lightbox");
   if (!lb) return;
-  const p = data.projects.find(function (proj) {
-    return proj.id === lb.dataset.projectId;
-  });
-  const total = p && p.imgs ? p.imgs.length : 0;
+  const total = getLightboxImages(lb.dataset.projectId).length;
   lbGoTo((parseInt(lb.dataset.current) + 1) % total);
 }
 
@@ -449,6 +481,20 @@ function renderAboutPage() {
       <div class="wrap">
         <h2 class="section-title">Certifications &amp; Recognitions</h2>
         <div class="card-grid" id="certGrid"></div>
+      </div>
+    </section>
+
+    <!-- Codefest Ventures -->
+    <section class="section codefest-section">
+      <div class="wrap">
+        <div class="codefest-heading">
+          <div>
+            <h2 class="section-title">Codefest Ventures</h2>
+            <p class="section-sub">A few proud moments from Tagisan ng Talino: Codefest 2025, where our team earned National Champion.</p>
+          </div>
+          <span class="codefest-badge"><span aria-hidden="true">🏆</span> NATIONAL CHAMPION</span>
+        </div>
+        <div class="codefest-gallery" id="codefestGallery"></div>
       </div>
     </section>
 
@@ -584,6 +630,22 @@ function renderAboutPage() {
     cg.appendChild(card);
   });
 
+  const codefestGallery = document.getElementById("codefestGallery");
+  a.codefest_gallery.forEach(function (item, index) {
+    const figure = document.createElement("figure");
+    figure.className = "codefest-photo";
+    figure.setAttribute("data-reveal", "up");
+    figure.setAttribute("data-delay", String((index % 3) + 1));
+    figure.innerHTML = `
+      <button class="codefest-photo-button" type="button" aria-label="View Codefest photo ${index + 1}: ${item.caption}" onclick="openLightbox('codefest', ${index})">
+        <img src="${encodeURI(item.image)}" alt="${item.caption}" loading="lazy" />
+        <span class="codefest-photo-zoom" aria-hidden="true">↗</span>
+      </button>
+      <figcaption><span class="codefest-photo-index">${String(index + 1).padStart(2, "0")}</span>${item.caption}</figcaption>
+    `;
+    codefestGallery.appendChild(figure);
+  });
+
   const dataCertGrid = document.getElementById("dataEngineeringCertGrid");
   a.data_engineering_certificates.forEach(function (certificate, index) {
     const card = document.createElement("a");
@@ -592,7 +654,13 @@ function renderAboutPage() {
     card.target = "_blank";
     card.rel = "noopener noreferrer";
     card.setAttribute("aria-label", "View certificate: " + certificate.title);
+    card.onmouseenter = function () { loadDataCertificatePreview(card, certificate); };
+    card.onfocus = function () { loadDataCertificatePreview(card, certificate); };
     card.innerHTML = `
+      <span class="data-cert-preview" aria-hidden="true">
+        <span class="data-cert-preview-heading">${certificate.title}</span>
+        <span class="data-cert-preview-frame"></span>
+      </span>
       <span class="data-cert-index">${String(index + 1).padStart(2, "0")}</span>
       <span class="data-cert-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -608,6 +676,18 @@ function renderAboutPage() {
     `;
     dataCertGrid.appendChild(card);
   });
+}
+
+function loadDataCertificatePreview(card, certificate) {
+  const frame = card.querySelector(".data-cert-preview-frame");
+  if (!frame || frame.querySelector("iframe")) return;
+
+  const preview = document.createElement("iframe");
+  preview.src = encodeURI(certificate.file) + "#toolbar=0&navpanes=0&scrollbar=0&view=FitH";
+  preview.title = certificate.title + " certificate preview";
+  preview.loading = "lazy";
+  preview.tabIndex = -1;
+  frame.appendChild(preview);
 }
 
 // ═══════════════════════════════════════════

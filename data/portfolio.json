@@ -157,6 +157,32 @@
         "imgs": ["assets/img/certificates/sap.png"]
       }
     ],
+    "codefest_gallery": [
+      {
+        "image": "tagisan_ng_talino/500263020_1190572072866457_4751300673515673433_n.jpg",
+        "caption": "Celebrating the Codefest national championship"
+      },
+      {
+        "image": "tagisan_ng_talino/Screenshot 2026-11-10 233851.png",
+        "caption": "A warm welcome for the Codefest team"
+      },
+      {
+        "image": "tagisan_ng_talino/Screenshot 2026-11-10 233928.png",
+        "caption": "Team moments from the competition"
+      },
+      {
+        "image": "tagisan_ng_talino/Screenshot 2026-11-10 234016.png",
+        "caption": "Taking part in Tagisan ng Talino"
+      },
+      {
+        "image": "tagisan_ng_talino/Screenshot 2026-11-10 234039.png",
+        "caption": "Inside the Codefest competition venue"
+      },
+      {
+        "image": "tagisan_ng_talino/Screenshot 2026-11-10 234056.png",
+        "caption": "Memories from Codefest 2025"
+      }
+    ],
     "data_engineering_certificates": [
       {
         "title": "Associate Data Engineer",
@@ -210,6 +236,26 @@
   },
 
   "projects": [
+    {
+      "id": "sql-data-warehouse",
+      "title": "Data Warehouse & Analytics",
+      "type": "Data Engineering / SQL Server",
+      "desc": "Built a SQL Server data warehouse that brings together ERP and CRM sales data using a Bronze, Silver, and Gold medallion architecture.",
+      "detail": "Load raw CSV data into the Bronze layer, clean and standardize it in Silver, then shape business-ready Gold views into a star schema. The project also includes SQL analytics for customer behavior, product performance, and sales trends, alongside architecture and data-model documentation.",
+      "thumb_type": "warehouse",
+      "color": "#4ade80",
+      "github": "https://github.com/Jhonas028/sql-data-warehouse-project"
+    },
+    {
+      "id": "lyndas-lechon",
+      "title": "Lynda's Lechon Web App",
+      "type": "Team Project / E-Commerce",
+      "desc": "A full-stack ordering and restaurant management application created as a team project for Lynda's Lechon in Marikina.",
+      "detail": "Customers can browse dishes, customize whole lechon orders, choose pickup or delivery, pin delivery locations, calculate delivery fees, pay through supported methods, and track order status. The administration suite supports order fulfillment, sales analytics, menu and inventory management, and store settings. Built with React 19, Material UI, Node.js, Express, MongoDB Atlas, Leaflet, Cloudinary, and PayMongo.",
+      "thumb_type": "restaurant",
+      "color": "#f0a94b",
+      "github": "https://github.com/bhimlex13/lyndasLechonWebApp-V2"
+    },
     {
       "id": "centra",
       "title": "Centra Suite",
