@@ -16,7 +16,7 @@
     "badge": "Full Stack Web Developer",
     "headline": "Hi, I am Jhonas Sotero a Full Stack Web Developer",
     "tagline": "Building scalable web and mobile applications with React, PHP, and JavaScript. Delivering real-world solutions through clean, performant code.",
-    "photo": "assets/img/photos/my_photo.png",
+    "photo": "assets/my_image_graduation.jpg",
     "cta_primary": "Projects",
     "cta_secondary": "Contact",
     "skills": [
@@ -155,6 +155,56 @@
         "icon": "🖥️",
         "desc": "System Administration Certificate — 2024",
         "imgs": ["assets/img/certificates/sap.png"]
+      }
+    ],
+    "data_engineering_certificates": [
+      {
+        "title": "Associate Data Engineer",
+        "file": "data_engineer_certificate/Associate Data Engineer Certifications.pdf"
+      },
+      {
+        "title": "Data Warehouse Concepts",
+        "file": "data_engineer_certificate/Data warehouse concepts.pdf"
+      },
+      {
+        "title": "Database Design",
+        "file": "data_engineer_certificate/Database Design.pdf"
+      },
+      {
+        "title": "Intermediate Python",
+        "file": "data_engineer_certificate/Intermediate to Phyton.pdf"
+      },
+      {
+        "title": "Intermediate SQL",
+        "file": "data_engineer_certificate/Intermediate to SQL.pdf"
+      },
+      {
+        "title": "Introduction to Data Engineering",
+        "file": "data_engineer_certificate/Intro to Data Engineering.pdf"
+      },
+      {
+        "title": "Introduction to Snowflake",
+        "file": "data_engineer_certificate/Intro to Snowflake.pdf"
+      },
+      {
+        "title": "Introduction to Python",
+        "file": "data_engineer_certificate/Introduction to Phyton.pdf"
+      },
+      {
+        "title": "Introduction to Relational Databases in SQL",
+        "file": "data_engineer_certificate/Introduction to Relational Databases in SQL.pdf"
+      },
+      {
+        "title": "Introduction to SQL",
+        "file": "data_engineer_certificate/Introduction to SQL.pdf"
+      },
+      {
+        "title": "Joining Data in SQL",
+        "file": "data_engineer_certificate/Joining Data in SQL.pdf"
+      },
+      {
+        "title": "Understanding Data Engineering",
+        "file": "data_engineer_certificate/Understanding Data Engineering.pdf"
       }
     ]
   },

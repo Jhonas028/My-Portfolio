@@ -451,6 +451,20 @@ function renderAboutPage() {
         <div class="card-grid" id="certGrid"></div>
       </div>
     </section>
+
+    <!-- Data Engineering Certificates -->
+    <section class="section data-engineering-section">
+      <div class="wrap">
+        <div class="data-cert-heading">
+          <div>
+            <h2 class="section-title">Data Engineering Certificates</h2>
+            <p class="section-sub">A focused collection covering Python, SQL, databases, data warehouses, and modern data engineering.</p>
+          </div>
+          <span class="data-cert-count" aria-label="${a.data_engineering_certificates.length} certificates">${String(a.data_engineering_certificates.length).padStart(2, "0")} <span>certificates</span></span>
+        </div>
+        <div class="data-cert-grid" id="dataEngineeringCertGrid"></div>
+      </div>
+    </section>
   `;
 
   // socials — SVG icons
@@ -568,6 +582,31 @@ function renderAboutPage() {
       card.innerHTML = `<div class="cert-icon">${c.icon}</div><p>${c.desc}${badge}</p>`;
     }
     cg.appendChild(card);
+  });
+
+  const dataCertGrid = document.getElementById("dataEngineeringCertGrid");
+  a.data_engineering_certificates.forEach(function (certificate, index) {
+    const card = document.createElement("a");
+    card.className = "data-cert-card";
+    card.href = encodeURI(certificate.file);
+    card.target = "_blank";
+    card.rel = "noopener noreferrer";
+    card.setAttribute("aria-label", "View certificate: " + certificate.title);
+    card.innerHTML = `
+      <span class="data-cert-index">${String(index + 1).padStart(2, "0")}</span>
+      <span class="data-cert-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z"/>
+          <path d="M14 3.75v4h4M8.5 13h7M8.5 16.5h5"/>
+        </svg>
+      </span>
+      <span class="data-cert-copy">
+        <span class="data-cert-label">DATA ENGINEERING</span>
+        <span class="data-cert-title">${certificate.title}</span>
+      </span>
+      <span class="data-cert-link" aria-hidden="true">↗</span>
+    `;
+    dataCertGrid.appendChild(card);
   });
 }
 
@@ -1764,6 +1803,15 @@ function addRevealAttributes() {
     el.setAttribute("data-reveal", "up");
   });
 
+  var heroContent = document.querySelector(".hero-content");
+  if (heroContent) heroContent.setAttribute("data-reveal", "left");
+
+  var heroPhoto = document.querySelector(".hero-photo");
+  if (heroPhoto) {
+    heroPhoto.setAttribute("data-reveal", "scale");
+    heroPhoto.setAttribute("data-delay", "2");
+  }
+
   document.querySelectorAll("#skillsGrid .card").forEach(function (el, i) {
     el.setAttribute("data-reveal", "up");
     el.setAttribute("data-delay", String(i + 1));
@@ -1796,6 +1844,11 @@ function addRevealAttributes() {
   document.querySelectorAll(".cert-card").forEach(function (el, i) {
     el.setAttribute("data-reveal", "up");
     el.setAttribute("data-delay", String(Math.min(i + 1, 8)));
+  });
+
+  document.querySelectorAll(".data-cert-card").forEach(function (el, i) {
+    el.setAttribute("data-reveal", "up");
+    el.setAttribute("data-delay", String((i % 6) + 1));
   });
 
   document.querySelectorAll(".soft-item").forEach(function (el, i) {
