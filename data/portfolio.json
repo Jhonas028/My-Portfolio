@@ -2,7 +2,7 @@
   "meta": {
     "logo": "JNS",
     "name": "Jhonas Sotero",
-    "title": "Jhonas Sotero | Full Stack Web Developer",
+    "title": "Jhonas Sotero | Full Stack Web Developer & Data Engineer",
     "email": "soterojhonas028@gmail.com",
     "phone": "+63 976-481-1246",
     "socials": [
@@ -13,9 +13,9 @@
   },
 
   "home": {
-    "badge": "Full Stack Web Developer",
-    "headline": "Hi, I am Jhonas Sotero a Full Stack Web Developer",
-    "tagline": "Building scalable web and mobile applications with React, PHP, and JavaScript. Delivering real-world solutions through clean, performant code.",
+    "badge": "Full Stack Web Developer & Data Engineer",
+    "headline": "Hi, I am Jhonas Sotero — Full Stack Web Developer & Data Engineer",
+    "tagline": "Building web and mobile applications while designing data pipelines and SQL warehouses that turn raw data into useful insights.",
     "photo": "assets/my_image_graduation.jpg",
     "cta_primary": "Projects",
     "cta_secondary": "Contact",
